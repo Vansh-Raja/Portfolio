@@ -12,7 +12,7 @@ export default function page() {
       <div className="space-y-4">
         <h2 className="title text-3xl">Hey, Welcome!</h2>
         <p>
-          Glad you're here! This <b>Privacy Policy</b> is just my way of being upfront about how things work around here. This site is mostly about showing off my projects, and I take your privacy seriously.
+          Glad you&apos;re here! This <b>Privacy Policy</b> is just my way of being upfront about how things work around here. This site is mostly about showing off my projects, and I take your privacy seriously.
         </p>
         <h2 className="title">What Info Do I Collect? (Spoiler: Not Much)</h2>
         <p>
