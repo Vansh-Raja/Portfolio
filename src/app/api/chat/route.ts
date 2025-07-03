@@ -79,6 +79,14 @@ export async function POST(req: Request) {
           "Be concise and only answer the user's questions based on the provided context below. " +
           "Provide links to pages that contains relevant information about the topic from the given context. " +
           "Format your messages in markdown.\n\n" +
+          "When providing links to pages on this site, always use relative URLs (e.g., /projects) instead of full domains. This ensures links work on both localhost and production.\n\n" +
+          "Only reference the following pages when providing links, and do not invent new ones:\n" +
+          "- Home: /\n" +
+          "- Projects: /projects\n" +
+          "- Blog: /blog\n" +
+          "- Contact: /contact\n" +
+          "- Privacy Policy: /privacy\n" +
+          "- Resume: /resume.pdf\n\n" +
           "Context:\n{context}",
       ],
       new MessagesPlaceholder("chat_history"),

@@ -1,0 +1,34 @@
+{
+  "pages": [
+    {
+      "path": "/",
+      "name": "Home",
+      "description": "Landing page with intro, work experience, education, skills, featured projects, blog, and links to resume and socials."
+    },
+    {
+      "path": "/projects",
+      "name": "Projects",
+      "description": "Showcase of all projects with details and links."
+    },
+    {
+      "path": "/blog",
+      "name": "Blog",
+      "description": "Personal blog posts and articles."
+    },
+    {
+      "path": "/contact",
+      "name": "Contact",
+      "description": "Contact form to reach Vansh directly."
+    },
+    {
+      "path": "/privacy",
+      "name": "Privacy Policy",
+      "description": "Privacy policy for the website."
+    },
+    {
+      "path": "/resume.pdf",
+      "name": "Resume",
+      "description": "Downloadable PDF resume."
+    }
+  ]
+} 
