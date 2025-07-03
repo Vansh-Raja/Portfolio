@@ -1,5 +1,5 @@
 {
-  "name": "tedawf.com",
+  "name": "vanshraja.me",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -20,6 +20,7 @@
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-popover": "^1.1.14",
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tabs": "^1.1.0",
@@ -38,6 +39,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
+    "react-icons": "^5.5.0",
     "react-markdown": "^9.0.1",
     "resend": "^4.0.0",
     "sonner": "^1.5.0",

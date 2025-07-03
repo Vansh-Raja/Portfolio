@@ -1,5 +1,7 @@
 MIT License
 
+This project is now maintained by Vansh (vanshraja.me), based on the original work by Ang Wei Feng (Ted).
+
 Copyright (c) 2025 Ang Wei Feng (Ted)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

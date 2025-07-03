@@ -36,8 +36,8 @@ A clean, minimal portfolio website built with Next.js, Tailwind CSS, and Shadcn 
 git clone https://github.com/tedawf/tedawf.com ted-portfolio
 cd ted-portfolio
 npm install
-cp .env.example .env.local
-# Add your own API keys to .env.local
+cp .env.example .env
+# Add your own API keys to .env
 npm run dev
 ```
 
@@ -76,14 +76,11 @@ Deploy to Vercel:
 
 ## License
 
-MIT
+MIT. Portions of this project are based on the original work by Ang Wei Feng (Ted) ([tedawf.com](https://tedawf.com)), used under the MIT License. Significant modifications and ongoing maintenance by Vansh ([vanshraja.me](https://vanshraja.me)).
 
-## Featured on YouTube!
+See [LICENSE.txt](LICENSE.txt) for details.
 
-📺 **[Live Portfolio Review by Anthony Sistilli](https://www.youtube.com/watch?v=aUJiNyb3cvM&t=40s)** - Got reviewed live on his stream!
+## Repository
 
-🔥 [Started a trend?](https://youtu.be/ib-Nlg9qWBw?si=1atsKJyfYDXtFVnE&t=400) - Apparently this portfolio design inspired others!
+[https://github.com/Vansh-Raja/Portfolio.git](https://github.com/Vansh-Raja/Portfolio.git)
 
----
-
-Feel free to fork and make it your own! Would love to see what you guys build with it ✨

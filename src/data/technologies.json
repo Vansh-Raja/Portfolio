@@ -1,0 +1,93 @@
+{
+  "technologies": {
+    "primary": [
+      {
+        "name": "Python",
+        "icon": "SiPython"
+      },
+      {
+        "name": "NumPy",
+        "icon": "SiNumpy"
+      },
+      {
+        "name": "Pandas",
+        "icon": "SiPandas"
+      },
+      {
+        "name": "Scikit-learn",
+        "icon": "SiScikitlearn"
+      },
+      {
+        "name": "TensorFlow",
+        "icon": "SiTensorflow"
+      },
+      {
+        "name": "Docker",
+        "icon": "SiDocker"
+      },
+      {
+        "name": "Redis",
+        "icon": "SiRedis"
+      },
+      {
+        "name": "Scrum",
+        "icon": "TbLayoutKanban"
+      }
+    ],
+    "additional": [
+      {
+        "label": "Data Science / ML",
+        "icon": "SiPython",
+        "items": [
+          "Polars",
+          "PySpark", 
+          "Dask",
+          "H2O AutoML",
+          "PyCaret",
+          "TPOT",
+          "Langchain",
+          "Ollama",
+          "Matplotlib",
+          "Seaborn",
+          "Plotly",
+          "LLM APIs (Groq, OpenAI, Google AI)"
+        ]
+      },
+      {
+        "label": "Web & MLOps",
+        "icon": "SiFlask",
+        "items": [
+          "Flask",
+          "Streamlit", 
+          "FastAPI",
+          "MLflow",
+          "Docker"
+        ]
+      },
+      {
+        "label": "Databases",
+        "icon": "SiMongodb",
+        "items": [
+          "Hadoop",
+          "Kafka",
+          "SQL", 
+          "PostgreSQL",
+          "Cassandra",
+          "MongoDB",
+          "Redis",
+          "Neo4j",
+          "CouchDB"
+        ]
+      },
+      {
+        "label": "Other",
+        "icon": "SiGit",
+        "items": [
+          "Oracle Cloud",
+          "Git",
+          "Scrum"
+        ]
+      }
+    ]
+  }
+} 

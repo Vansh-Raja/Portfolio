@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/Badge";
 import {
   Card,
@@ -11,18 +13,32 @@ import Image from "next/image";
 import Link from "next/link";
 import Markdown from "react-markdown";
 import Icon from "./Icon";
+import { useState } from "react";
 
 interface Props {
   project: Project;
 }
 
+// Helper to pick a category based on project name
+function getCategory(name: string) {
+  const categories = ["ai", "book", "album", "movie", "game", "fashion", "dashboard", "crm", "finance", "calendar", "messenger"];
+  // Use char code sum for deterministic but varied selection
+  const sum = name.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  return categories[sum % categories.length];
+}
+
 export function ProjectCard({ project }: Props) {
-  const { name, href, description, image, tags, links } = project;
+  const { name, href, description, image, tags, links, duration, team } = project;
+  const [imageError, setImageError] = useState(false);
+
+  // Use lorem.space as fallback (returns jpg/png)
+  const category = getCategory(name);
+  const fallbackUrl = `https://api.lorem.space/image/${category}?w=500&h=300&hash=${encodeURIComponent(name)}`;
 
   return (
     <Card className="flex flex-col">
       <CardHeader>
-        {image && (
+        {image && !imageError ? (
           <Link href={href || image}>
             <Image
               src={image}
@@ -30,9 +46,10 @@ export function ProjectCard({ project }: Props) {
               width={500}
               height={300}
               className="h-40 w-full object-cover object-top"
+              onError={() => setImageError(true)}
             />
           </Link>
-        )}
+        ) : null}
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
         <CardTitle>{name}</CardTitle>

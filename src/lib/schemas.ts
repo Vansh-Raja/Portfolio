@@ -46,3 +46,24 @@ export type Experience = z.infer<typeof experience>;
 export const careerSchema = z.object({ career: z.array(experience) });
 export const educationSchema = z.object({ education: z.array(experience) });
 export const socialSchema = z.object({ socials: z.array(iconLink) });
+
+const primarySkill = z.object({
+  name: z.string(),
+  icon: z.string(),
+});
+
+const additionalCategory = z.object({
+  label: z.string(),
+  icon: z.string(),
+  items: z.array(z.string()),
+});
+
+const technologies = z.object({
+  primary: z.array(primarySkill),
+  additional: z.array(additionalCategory),
+});
+
+export const technologiesSchema = z.object({ technologies });
+export type PrimarySkill = z.infer<typeof primarySkill>;
+export type AdditionalCategory = z.infer<typeof additionalCategory>;
+export type Technologies = z.infer<typeof technologies>;

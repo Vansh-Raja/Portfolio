@@ -4,6 +4,8 @@ import educationData from "@/data/education.json";
 import { careerSchema, educationSchema } from "@/lib/schemas";
 import Timeline from "./Timeline";
 
+// TODO: Add badges/icons for tools used in experience section
+
 export default function Experience() {
   const career = careerSchema.parse(careerData).career;
   const education = educationSchema.parse(educationData).education;
