@@ -8,9 +8,11 @@
       "start": "Nov ‘23",
       "end": "Jan ‘25",
       "description": [
-        "Built and maintained MLOps pipelines using DVC and MLFlow.",
-        "Contributed to open-source ML projects for the PreProd Opnsrc initiative (MLFlow, PySpark, RAG, GAN, MobileNet, etc.).",
-        "Led 6 teams to develop 30+ open-source projects, managed weekly sprints, and supported team learning."
+        "Designed and implemented an end-to-end MLOps pipeline using Kafka, DVC, MLflow, PySpark and Scikit-Learn for a Food Demand Forecasting project [Nov '23 – Feb '24]",
+        "Contributed to PreProdCorp's Opensrc' initiative by developing demo projects using tools like PySpark, RAG, GAN, MobileNet, Redis, and CouchDB [Mar '24 – Jul '24]",
+        "Designed, organized, and executed the 2-day \"Buildathon\" Hackathon at VIT Bhopal; developed the MVP for the AutoML app demo, mentored participants, and assisted in evaluating final submissions [Aug '24]",
+        "Led 20 interns across 6 teams as Team Leader, guiding the development of 30+ demo projects under the PreProdCorp Opensrc' initiative using PySpark, Pandas, Polars, CV, RAG, and GANs [Aug '24 – Jan '25]",
+        "Acted as Scrum Master, conducting sprint meetings, ensuring timely delivery, and promoting MLOps best practices [Aug '24 – Jan '25]"
       ]
     }
   ]
