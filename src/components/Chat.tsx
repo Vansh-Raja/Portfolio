@@ -3,6 +3,7 @@ import { useChat } from "ai/react";
 import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import ChatMessages from "./ChatMessages";
+import ChatSuggestions from "./ChatSuggestions";
 import {
   Accordion,
   AccordionContent,
@@ -17,6 +18,7 @@ export default function Chat() {
     handleInputChange,
     handleSubmit,
     setMessages,
+    append,
     isLoading,
     error,
   } = useChat();
@@ -39,6 +41,18 @@ export default function Chat() {
               error={error}
               isLoading={isLoading}
             />
+            {messages.length === 0 && (
+              <ChatSuggestions
+                suggestions={[
+                  "What projects has Vansh worked on?",
+                  "What skills does Vansh have?",
+                  "Does Vansh have experience in Generative AI?",
+                ]}
+                onSelectSuggestion={(s) =>
+                  append({ role: "user", content: s })
+                }
+              />
+            )}
             <ChatInput
               input={input}
               handleSubmit={handleSubmit}
