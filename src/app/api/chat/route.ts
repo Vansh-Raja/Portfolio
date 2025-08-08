@@ -33,7 +33,6 @@ export async function POST(req: Request) {
       callbacks: [handlers],
       verbose: true, // logs to console
       cache,
-      temperature: 0,
     });
 
     const rephraseModel = new ChatOpenAI({
