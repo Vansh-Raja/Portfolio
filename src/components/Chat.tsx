@@ -3,6 +3,7 @@ import { useChat } from "ai/react";
 import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import ChatMessages from "./ChatMessages";
+import ChatSuggestions from "./ChatSuggestions";
 import {
   Accordion,
   AccordionContent,
@@ -17,6 +18,7 @@ export default function Chat() {
     handleInputChange,
     handleSubmit,
     setMessages,
+    append,
     isLoading,
     error,
   } = useChat();
@@ -25,20 +27,32 @@ export default function Chat() {
 
   return (
     isVisible && (
-      <Accordion type="single" collapsible className="flexs relative z-40">
+      <Accordion type="single" collapsible className="relative z-40">
         <AccordionItem
           value="item-1"
-          className="fixed bottom-8 right-8 w-80 rounded-md border bg-background"
+          className="fixed bottom-6 right-6 w-80 sm:w-96 rounded-xl border bg-background/95 shadow-lg backdrop-blur supports-[backdrop-filter]:bg-background/80"
         >
-          <AccordionTrigger className="border-b px-6">
+          <AccordionTrigger className="border-b px-5 py-3 hover:bg-accent/40">
             <ChatHeader />
           </AccordionTrigger>
-          <AccordionContent className="flex max-h-96 min-h-80 flex-col justify-between p-0">
+          <AccordionContent className="flex max-h-[28rem] min-h-[22rem] flex-col justify-between p-0">
             <ChatMessages
               messages={messages}
               error={error}
               isLoading={isLoading}
             />
+            {messages.length === 0 && (
+              <ChatSuggestions
+                suggestions={[
+                  "What projects has Vansh worked on?",
+                  "What skills does Vansh have?",
+                  "Does Vansh have experience in Generative AI?",
+                ]}
+                onSelectSuggestion={(s) =>
+                  append({ role: "user", content: s })
+                }
+              />
+            )}
             <ChatInput
               input={input}
               handleSubmit={handleSubmit}

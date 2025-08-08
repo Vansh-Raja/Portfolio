@@ -25,7 +25,7 @@ export default function ChatMessages({
   }, [messages]);
 
   return (
-    <div className="h-full overflow-y-auto p-3" ref={scrollRef}>
+    <div className="h-full overflow-y-auto p-3 bg-gradient-to-b from-transparent to-muted/30" ref={scrollRef}>
       <ul>
         {messages.map((msg) => (
           <li key={msg.id}>
@@ -36,7 +36,7 @@ export default function ChatMessages({
 
       {/* empty */}
       {!error && messages.length === 0 && (
-        <div className="mt-16 flex h-full flex-col items-center justify-center gap-2">
+        <div className="mt-16 flex h-full flex-col items-center justify-center gap-2 text-center">
           <Bot />
           <p className="font-medium">Send a message to start the chat!</p>
           <p className="text-center text-xs text-muted-foreground">
