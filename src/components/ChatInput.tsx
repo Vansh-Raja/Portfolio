@@ -34,39 +34,43 @@ export default function ChatInput({
 }: ChatInputProps) {
   console.log(messages);
   return (
-    <form onSubmit={handleSubmit} className="flex gap-1 border-t px-2 py-3">
-      <Button
+    <form onSubmit={handleSubmit} className="flex flex-col gap-1 border-t px-2 py-2">
+      <div className="flex items-center gap-1">
+        <Button
         title="Clear chat"
         variant="outline"
         onClick={() => setMessages([])}
         className="px-3 py-2"
         disabled={messages.length === 0}
         type="button"
-      >
-        <Trash className="size-4 text-rose-500" />
-      </Button>
-      <Input
-        autoFocus
-        placeholder="Ask something..."
-        // className="bg-muted"
-        value={input}
-        onChange={handleInputChange}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            e.preventDefault();
-            handleSubmit(e);
-          }
-        }}
-      />
-      <Button
-        title="Send message"
-        variant="default"
-        className="px-3 py-2"
-        disabled={input.length === 0}
-        type="submit"
-      >
-        <SendHorizontal className="size-4" />
-      </Button>
+        >
+          <Trash className="size-4 text-rose-500" />
+        </Button>
+        <Input
+          autoFocus
+          placeholder="Ask something..."
+          value={input}
+          onChange={handleInputChange}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleSubmit(e);
+            }
+          }}
+        />
+        <Button
+          title="Send message"
+          variant="default"
+          className="px-3 py-2"
+          disabled={input.length === 0}
+          type="submit"
+        >
+          <SendHorizontal className="size-4" />
+        </Button>
+      </div>
+      <p className="px-1 text-[10px] text-muted-foreground">
+        Responses may contain mistakes.
+      </p>
     </form>
   );
 }
