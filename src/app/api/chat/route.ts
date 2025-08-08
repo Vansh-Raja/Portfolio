@@ -13,10 +13,6 @@ import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 import { createRetrievalChain } from "langchain/chains/retrieval";
 
-function isFixedTempModel(model: string) {
-  return model.startsWith("gpt-5-nano"); // can extend later
-}
-
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -31,22 +27,19 @@ export async function POST(req: Request) {
       client: Redis.fromEnv(),
     });
 
-    const chatModelId = "gpt-5-nano";
     const chatModel = new ChatOpenAI({
-      model: chatModelId,
+      model: "gpt-5-nano",
       streaming: true,
       callbacks: [handlers],
       verbose: true, // logs to console
       cache,
-      ...(isFixedTempModel(chatModelId) ? {} : { temperature: 0 }),
+      temperature: 0,
     });
 
-    const rephraseModelId = "gpt-5-nano";
     const rephraseModel = new ChatOpenAI({
-      model: rephraseModelId,
+      model: "gpt-5-nano",
       verbose: true,
       cache,
-      ...(isFixedTempModel(rephraseModelId) ? {} : { temperature: 0 }),
     });
 
     const retriever = (await getVectorStore()).asRetriever();
@@ -118,10 +111,6 @@ export async function POST(req: Request) {
       combineDocsChain,
       retriever: historyAwareRetrievalChain, // get the relevant documents based on chat history
     });
-
-    if (!latestMessage?.trim()) {
-      return new Response("No prompt provided.", { status: 400 });
-    }
 
     retrievalChain.invoke({
       input: latestMessage,
