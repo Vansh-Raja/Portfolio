@@ -23,7 +23,7 @@ export default function ChatSuggestions({
             type="button"
             variant="outline"
             size="sm"
-            className="whitespace-normal text-left"
+            className="whitespace-normal rounded-full border-input/60 bg-muted/20 text-left hover:bg-accent/40"
             onClick={() => onSelectSuggestion(s)}
           >
             {s}

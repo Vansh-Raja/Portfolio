@@ -27,15 +27,15 @@ export default function Chat() {
 
   return (
     isVisible && (
-      <Accordion type="single" collapsible className="flexs relative z-40">
+      <Accordion type="single" collapsible className="relative z-40">
         <AccordionItem
           value="item-1"
-          className="fixed bottom-8 right-8 w-80 rounded-md border bg-background"
+          className="fixed bottom-6 right-6 w-80 sm:w-96 rounded-xl border bg-background/95 shadow-lg backdrop-blur supports-[backdrop-filter]:bg-background/80"
         >
-          <AccordionTrigger className="border-b px-6">
+          <AccordionTrigger className="border-b px-5 py-3 hover:bg-accent/40">
             <ChatHeader />
           </AccordionTrigger>
-          <AccordionContent className="flex max-h-96 min-h-80 flex-col justify-between p-0">
+          <AccordionContent className="flex max-h-[28rem] min-h-[22rem] flex-col justify-between p-0">
             <ChatMessages
               messages={messages}
               error={error}
