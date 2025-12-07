@@ -7,12 +7,33 @@
       "logo": "/preprodcorp.jpeg",
       "start": "Nov ‘23",
       "end": "Jan ‘25",
+      "highlights": [
+        "Built an end-to-end MLOps pipeline for food demand forecasting",
+        "Led 20 interns across 6 teams to ship 30+ demo projects",
+        "Created an AutoML MVP and ran a 2-day buildathon at VIT Bhopal"
+      ],
+      "technologies": [
+        "Kafka",
+        "DVC",
+        "MLflow",
+        "PySpark",
+        "Scikit-Learn",
+        "Pandas",
+        "Polars",
+        "RAG",
+        "GAN",
+        "MobileNet",
+        "Redis",
+        "CouchDB",
+        "Computer Vision",
+        "AutoML"
+      ],
       "description": [
-        "Designed and implemented an end-to-end MLOps pipeline using Kafka, DVC, MLflow, PySpark and Scikit-Learn for a Food Demand Forecasting project [Nov '23 – Feb '24]",
-        "Contributed to PreProdCorp's Opensrc' initiative by developing demo projects using tools like PySpark, RAG, GAN, MobileNet, Redis, and CouchDB [Mar '24 – Jul '24]",
-        "Designed, organized, and executed the 2-day \"Buildathon\" Hackathon at VIT Bhopal; developed the MVP for the AutoML app demo, mentored participants, and assisted in evaluating final submissions [Aug '24]",
-        "Led 20 interns across 6 teams as Team Leader, guiding the development of 30+ demo projects under the PreProdCorp Opensrc' initiative using PySpark, Pandas, Polars, CV, RAG, and GANs [Aug '24 – Jan '25]",
-        "Acted as Scrum Master, conducting sprint meetings, ensuring timely delivery, and promoting MLOps best practices [Aug '24 – Jan '25]"
+        "Designed and implemented an end-to-end MLOps pipeline for a food demand forecasting project using Kafka, DVC, MLflow, PySpark, and Scikit-Learn.",
+        "Developed demo projects for PreProdCorp's Opensrc initiative using PySpark, RAG, GAN, MobileNet, Redis, and CouchDB.",
+        "Organized and executed a 2-day \"Buildathon\" at VIT Bhopal; built the AutoML MVP, mentored participants, and evaluated submissions.",
+        "Led 20 interns across 6 teams, delivering 30+ demo projects under Opensrc using PySpark, Pandas, Polars, CV, RAG, and GANs.",
+        "Acted as Scrum Master, running sprints, ensuring delivery, and promoting MLOps best practices."
       ]
     }
   ]
