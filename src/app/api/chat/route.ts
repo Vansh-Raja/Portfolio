@@ -85,7 +85,7 @@ export async function POST(req: Request) {
           "- Blog: /blog\n" +
           "- Contact: /contact\n" +
           "- Privacy Policy: /privacy\n" +
-          "- Resume: /resume.pdf\n\n" +
+          "- Resume: /VanshRaja_Resume.pdf\n\n" +
           "Context:\n{context}",
       ],
       new MessagesPlaceholder("chat_history"),
