@@ -1,15 +1,87 @@
 {
   "projects": [
     {
+      "name": "Data Loss Prevention",
+      "description": "Cross-platform DLP agents (Windows/Linux) that watch file-system, clipboard, and PII events, forwarding everything in real time to a FastAPI backbone with PostgreSQL, Redis, and OpenSearch for policy checks and incident logging. Shipped as a Docker Compose stack for quick deploys.",
+      "tags": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "Redis",
+        "OpenSearch",
+        "Docker",
+        "Windows",
+        "Linux"
+      ],
+      "links": [
+        {
+          "name": "Source",
+          "href": "https://github.com/effaaykhan/Data-Loss-Prevention",
+          "icon": "github"
+        }
+      ],
+      "duration": "Nov ‘25",
+      "team": "2 members"
+    },
+    {
+      "name": "Legal Drafting System",
+      "description": "RAG legal assistant with two modes: upload a petition to pull case law and draft replies, or chat over a PGVector-indexed corpus of Indian judgments. Built ingestion for text + metadata, hybrid retrieval (vector + PostgreSQL FTS), LLM query planning, and context assembly; shipped with a Streamlit UI and multiple model backends (Ollama/OpenAI/OpenRouter).",
+      "tags": [
+        "Python",
+        "PostgreSQL",
+        "PGVector",
+        "LangChain",
+        "Streamlit",
+        "Ollama",
+        "OpenAI",
+        "pdfminer"
+      ],
+      "links": [
+        {
+          "name": "Source",
+          "href": "https://github.com/Vansh-Raja/LegalDraftingSystem",
+          "icon": "github"
+        }
+      ],
+      "duration": "Oct ‘25",
+      "team": "Solo"
+    },
+    {
+      "name": "Sunshine Bot",
+      "description": "Voice assistant on a Twilio number that recognizes patients by phone and manages hospital appointments end-to-end via Google Calendar with a SQLite/Postgres cache. Handles booking, changes, and history with conflict-free, doctor-specific slots and TTS via ElevenLabs.",
+      "tags": [
+        "Python",
+        "Flask",
+        "Twilio",
+        "Google Calendar",
+        "SQLite",
+        "PostgreSQL",
+        "ElevenLabs",
+        "Waitress"
+      ],
+      "links": [
+        {
+          "name": "Source",
+          "href": "https://github.com/Vansh-Raja/SunshineBot",
+          "icon": "github"
+        }
+      ],
+      "duration": "Nov ‘23 – Jan ‘24",
+      "team": "2 members"
+    },
+    {
       "name": "Food Demand Forecasting",
-      "description": "Time-series model to forecast food demand with high accuracy. Implemented MLOps pipeline to enhance efficiency. Improved prediction accuracy, optimizing inventory management and reducing food wastage.",
+      "description": "Time-series pipeline to forecast food demand and cut waste. Built end-to-end MLOps with Kafka + PySpark for ingestion, DVC/MLflow for experiment tracking, and a Flask service to surface forecasts that improve inventory planning.",
       "image": "/FoodDemandProject.png",
       "tags": [
         "Kafka",
-        "MLFlow",
+        "PySpark",
+        "MLflow",
         "DVC",
         "Scikit-Learn",
-        "Flask"
+        "Flask",
+        "Pandas",
+        "NumPy"
       ],
       "links": [
         {
@@ -18,36 +90,36 @@
           "icon": "github"
         }
       ],
-      "duration": "Nov'23 – Feb'24",
+      "duration": "Nov ‘23 – Feb ‘24",
       "team": "7 members"
     },
     {
       "name": "Calpred",
-      "description": "Calorie prediction framework to estimate caloric expenditure from workout data. Features real-time tracking, interactive visualization, and data-driven fitness insights.",
-      "image": "/CozyReader.png",
+      "description": "Calorie-burn predictor from workout data with a web UI for real-time tracking and visual feedback. Trained with XGBoost/TPOT and packaged behind Flask with lightweight storage to keep users on top of their fitness goals.",
       "tags": [
         "Flask",
-        "SQLite3",
+        "SQLite",
         "Plotly",
         "Dash",
         "Pandas",
         "NumPy",
         "XGBoost",
-        "TPOT"
+        "TPOT",
+        "Seaborn"
       ],
       "links": [
         {
           "name": "Source",
-          "href": "https://github.com/Vansh-Raja/CaloriePredictionProject/",
+          "href": "https://github.com/Vansh-Raja/CaloriePredictionProject",
           "icon": "github"
         }
       ],
-      "duration": "Nov'23 – Jan'24",
+      "duration": "Nov ‘23 – Jan ‘24",
       "team": "3 members"
     },
     {
       "name": "CozyReader",
-      "description": "AI-powered bedtime storyteller that crafts personalized stories based on child preferences. Features custom characters, themes, and locally hosted text-to-speech voices.",
+      "description": "AI bedtime storyteller that crafts personalized audio tales with custom characters, themes, and voices. Streamlit front-end with HuggingFace TTS voices and Google GenAI to keep bedtime engaging.",
       "image": "/CozyReader.png",
       "tags": [
         "Google Generative AI API",
@@ -63,7 +135,7 @@
           "icon": "github"
         }
       ],
-      "duration": "Apr'24 - May'24",
+      "duration": "Apr ‘24 - May ‘24",
       "team": "Solo"
     }
   ]
