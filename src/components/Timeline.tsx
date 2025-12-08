@@ -10,7 +10,7 @@ export default function Timeline({ experience }: Props) {
   return (
     <Card>
       <CardContent className="p-0">
-        <ul className="relative ml-6 border-l border-border/60">
+        <ul className="ml-10 border-l">
           {experience.map((exp, id) => (
             <TimelineItem key={id} experience={exp} />
           ))}
