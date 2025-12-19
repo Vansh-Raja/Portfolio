@@ -45,7 +45,7 @@ export default async function Post({ params }: { params: { slug: string } }) {
 
       <header>
         <h1 className="title">{title}</h1>
-        <p className="mt-2 text-xs text-muted-foreground">
+        <p className="mt-4 text-xs text-muted-foreground">
           {formatDate(publishedAt ?? "")} · {readTime}
         </p>
       </header>
