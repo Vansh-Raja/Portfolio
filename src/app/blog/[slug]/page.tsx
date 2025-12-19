@@ -1,7 +1,7 @@
 import LinkWithIcon from "@/components/LinkWithIcon";
 import MDXContent from "@/components/MDXContent";
 import { getPostBySlug, getPosts } from "@/lib/posts";
-import { formatDate } from "@/lib/utils";
+import { calculateReadTime, formatDate } from "@/lib/utils";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -26,6 +26,7 @@ export default async function Post({ params }: { params: { slug: string } }) {
 
   const { metadata, content } = post;
   const { title, image, publishedAt } = metadata;
+  const readTime = calculateReadTime(content);
 
   return (
     <article className="mt-8 flex flex-col gap-8 pb-16">
@@ -45,7 +46,7 @@ export default async function Post({ params }: { params: { slug: string } }) {
       <header>
         <h1 className="title">{title}</h1>
         <p className="mt-2 text-xs text-muted-foreground">
-          {formatDate(publishedAt ?? "")}
+          {formatDate(publishedAt ?? "")} · {readTime}
         </p>
       </header>
 

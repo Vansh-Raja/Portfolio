@@ -1,6 +1,7 @@
 import fs from "fs";
 import matter from "gray-matter";
 import path from "path";
+import { calculateReadTime } from "./utils";
 
 export type Post = {
   metadata: PostMetadata;
@@ -13,6 +14,7 @@ export type PostMetadata = {
   image?: string;
   publishedAt?: string;
   slug: string;
+  readTime?: string;
 };
 
 export async function getPostBySlug(
@@ -59,7 +61,8 @@ export function getPostMetaData(
   const slug = filePath.replace(/\.mdx$/, "");
   const fullFilePath = path.join(rootDirectory, filePath);
   const fileContent = fs.readFileSync(fullFilePath, { encoding: "utf8" });
-  const { data } = matter(fileContent);
+  const { data, content } = matter(fileContent);
+  const readTime = calculateReadTime(content);
 
-  return { ...data, slug };
+  return { ...data, slug, readTime };
 }

@@ -28,6 +28,7 @@ export default function Posts({ posts }: Props) {
                   {post.publishedAt && (
                     <p className="mt-2 flex w-full justify-end text-sm font-light sm:mt-0 sm:w-auto">
                       {formatDate(post.publishedAt)}
+                      {post.readTime && ` · ${post.readTime}`}
                     </p>
                   )}
                 </div>
