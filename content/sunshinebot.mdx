@@ -1,0 +1,107 @@
+---
+title: "SunshineBot: Building a Voice-First Hospital Booking System in One Week"
+summary: "A voice-first hospital booking bot built in one week using ElevenLabs + Twilio, with a Flask backend and Google Calendar as the admin interface."
+image: "/projects/sunshinebot/sunshinebot.png"
+publishedAt: "2025-10-07"
+---
+
+## The Assignment
+
+I had a week to build a conversational AI chatbot for a hospital. This was an interview assignment for an internship at Virtual Galaxy.
+
+The spec asked for intent design, conversation flows, error handling—basically a document outlining how the bot would work. But I thought it would be cooler if they could actually call a phone number and try it themselves. So that's what I decided to build.
+
+---
+
+## Figuring Out the Approach
+
+I started by researching how people actually build voice AI.
+
+One option was to build everything myself—Python, LangChain, speech-to-text, an LLM, text-to-speech. I've done similar stuff before and it's definitely possible. But connecting all that to an actual phone call means setting up SIP servers and trunking, which is a whole infrastructure project on its own. That would eat up most of my week.
+
+The other option was ElevenLabs. They have a conversational AI product with Twilio integration built in. You set up your agent, connect a phone number, and it handles all the voice stuff—interruptions, turn-taking, latency. The hard parts.
+
+Since I only had a week and the whole point was a live phone demo, ElevenLabs made more sense. I could spend my time on the actual booking logic instead of fighting with voice infrastructure.
+
+---
+
+## How I Set Up the Backend
+
+With the voice layer sorted, I needed to figure out the backend.
+
+### Using Google Calendar as the Admin Interface
+
+Hospitals need to see their appointments somewhere. Building a custom dashboard would take a while. But everyone knows how to use Google Calendar. So I made that the interface for hospital staff.
+
+When the bot books something, it creates a calendar event. Staff can see the schedule, get reminders, move things around if needed. No learning curve.
+
+Behind the calendar, there's a SQLite database that syncs every 60 seconds. All the conflict checks and availability lookups happen against the database since it's faster. The calendar is really just a view. If I ever needed to replace it with something custom, I'd just change what the database syncs to.
+
+### Keeping Things Modular
+
+The Flask API has separate endpoints that the AI agent calls as tools:
+
+- Check if a patient exists by phone number
+- Save a new patient
+- Create an appointment
+- List all of a patient's appointments
+- Reschedule or cancel an appointment
+- Check a doctor's availability for a date
+
+Each one does one thing. The AI decides when to use them based on the conversation. This made testing easier since I could check the backend without needing the voice layer running.
+
+---
+
+## The Phone Number Situation
+
+I wanted to use an Indian number, but that turned out to be complicated.
+
+Getting a voice-enabled Indian number requires going through TRAI compliance and specific providers. The registration process takes longer than a week. So I just got a US number through Twilio, added an international calling pack to my phone, and called from India.
+
+It worked fine. The bot recognized my number, looked up my info, and let me book appointments. Good enough for a demo.
+
+---
+
+## What the Bot Does
+
+It handles the basics:
+
+- **Recognizes callers** by phone number when they call in
+- **Books appointments** — takes the specialty, date, time, checks for conflicts, creates the event
+- **Lists appointments** — can answer things like "what do I have tomorrow" or "when was my last visit"
+- **Reschedules** — confirms the new time, checks availability, updates everything
+- **Cancels** — confirms you actually want to cancel, then removes it
+
+Times are in IST, working hours are enforced, double-bookings don't happen. It's a working system, not just a script.
+
+---
+
+## What I'd Change With More Time
+
+A few things I'd do differently with another week:
+
+**Try other voice AI platforms.** I've looked into Retell, Vapi, Bland, and a few others since then. ElevenLabs worked well for this, but I'd want to compare options before building something for production.
+
+**Build a real admin interface.** Google Calendar is a nice shortcut, but a proper dashboard would let staff do more—see patient history, add notes, handle walk-ins. The database already supports it, it's just frontend work.
+
+**Get an Indian number properly.** With more time and budget, I'd go through the actual TRAI process and set up SIP trunking. The US number was a workaround.
+
+---
+
+## Try It Out
+
+The phone line isn't running anymore since ElevenLabs isn't free, but the code is all here:
+
+**GitHub:** [github.com/Vansh-Raja/SunshineBot](https://github.com/Vansh-Raja/SunshineBot)
+
+You can clone it, add your own Google Calendar credentials and API keys, and have a working booking bot. Setup instructions are in the README.
+
+---
+
+## Wrapping Up
+
+This was mostly about making practical choices with limited time.
+
+ElevenLabs instead of building voice infra from scratch. Google Calendar instead of a custom dashboard. A US number instead of dealing with Indian telecom regulations.
+
+A week, a working bot, and a phone number people could actually call. That was the goal and it worked out.

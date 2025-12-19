@@ -67,16 +67,15 @@
     },
     {
       "name": "Sunshine Bot",
-      "description": "Voice assistant on a Twilio number that recognizes patients by phone and manages hospital appointments end-to-end via Google Calendar with a SQLite/Postgres cache. Handles booking, changes, and history with conflict-free, doctor-specific slots and TTS via ElevenLabs.",
+      "description": "Built in one week: a voice-first hospital booking bot you could call on a real phone number. Used ElevenLabs + Twilio for voice, a Flask API for booking logic, and Google Calendar as the admin interface with SQLite sync for fast conflict checks. Supports patient lookup, booking, rescheduling, cancellations, and availability queries.",
+      "image": "/projects/sunshinebot/sunshinebot.png",
       "tags": [
         "Python",
         "Flask",
         "Twilio",
         "Google Calendar",
         "SQLite",
-        "PostgreSQL",
-        "ElevenLabs",
-        "Waitress"
+        "ElevenLabs"
       ],
       "links": [
         {
@@ -85,8 +84,9 @@
           "icon": "github"
         }
       ],
-      "duration": "Nov ‘23 – Jan ‘24",
-      "team": "2 members"
+      "duration": "Nov '23 – Jan '24",
+      "team": "Solo",
+      "blogSlug": "sunshinebot"
     },
     {
       "name": "Food Demand Forecasting",
