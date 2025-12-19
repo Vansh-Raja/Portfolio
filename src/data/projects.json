@@ -3,7 +3,7 @@
     {
       "name": "SSHThing",
       "description": "A TUI SSH manager built with Go and Bubble Tea. Save, organize, and connect to SSH hosts securely—all from the terminal. Features encrypted storage (SQLCipher + AES-GCM), spotlight search, multi-device sync via GitHub, and macOS Finder mounts.",
-      "image": "/sshthing/main-view.png",
+      "image": "/projects/sshthing/main-view.png",
       "tags": ["Go", "Bubble Tea", "SQLCipher", "AES-GCM", "TUI", "macOS"],
       "links": [
         {
@@ -19,7 +19,7 @@
     {
       "name": "Legal Drafting System",
       "description": "Multi-Agent RAG system that auto-drafts legal replies from 2,000+ Indian court judgments. Features an AI pipeline with query planning, hybrid search (vector + keyword), and a filtration agent. Supports petition upload for precedent-based rebuttals and an advisory chat interface.",
-      "image": "/lds/main-chat-1.png",
+      "image": "/projects/lds/main-chat-1.png",
       "tags": [
         "Python",
         "PostgreSQL",
@@ -91,7 +91,7 @@
     {
       "name": "Food Demand Forecasting",
       "description": "Time-series pipeline to forecast food demand and cut waste. Built end-to-end MLOps with Kafka + PySpark for ingestion, DVC/MLflow for experiment tracking, and a Flask service to surface forecasts that improve inventory planning.",
-      "image": "/FoodDemandProject.png",
+      "image": "/projects/food-demand.png",
       "tags": [
         "Kafka",
         "PySpark",
@@ -139,7 +139,7 @@
     {
       "name": "CozyReader",
       "description": "AI bedtime storyteller that crafts personalized audio tales with custom characters, themes, and voices. Streamlit front-end with HuggingFace TTS voices and Google GenAI to keep bedtime engaging.",
-      "image": "/CozyReader.png",
+      "image": "/projects/cozy-reader.png",
       "tags": [
         "Google Generative AI API",
         "HuggingFace TTS",

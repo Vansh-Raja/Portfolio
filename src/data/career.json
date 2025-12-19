@@ -4,7 +4,7 @@
       "name": "Virtual Galaxy Infotech Ltd.",
       "href": "https://virtualgalaxyinfotech.com/",
       "title": "Security Analyst Intern",
-      "logo": "/vgil.png",
+      "logo": "/logos/vgil.png",
       "start": "Oct ‘25",
       "description": [
         "Built a RAG legal drafting system: ingested 5,000+ judgments into PGVector, ran PDF → metadata → chunking → embeddings, and served hybrid retrieval (vector + PostgreSQL FTS) with petition-aware drafting via Streamlit.",
@@ -30,7 +30,7 @@
       "name": "PreProd Corp",
       "href": "https://thepreprodcorp.com/",
       "title": "Data Analyst Intern",
-      "logo": "/preprodcorp.jpeg",
+      "logo": "/logos/preprodcorp.jpeg",
       "start": "Nov ‘23",
       "end": "Jan ‘25",
       "technologies": [

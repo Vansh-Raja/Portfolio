@@ -1,7 +1,7 @@
 ---
 title: "Legal Drafting System: Multi-Agent RAG for Legal Petitions"
 summary: "A Multi-Agent RAG system that drafts legal replies from 2,000+ judgments using hybrid retrieval, query planning, and specialized agents."
-image: "/lds/main-chat-1.png"
+image: "/projects/lds/main-chat-1.png"
 publishedAt: "2025-10-27"
 ---
 
@@ -17,7 +17,7 @@ I quickly realized that a single AI model couldn't handle the complexity of lega
 
 Instead, I engineered an **AI Pipeline**—a chain of specialized agents working together.
 
-![Architecture Diagram](/lds/architecture.png)
+![Architecture Diagram](/projects/lds/architecture.png)
 
 1.  **The Planner:** When you ask a question, the system doesn't just search blindly. An "Orchestrator" agent first analyzes your intent. It decides if you are asking for specific case law, a broad summary, or legal advice, and then creates a strict JSON plan to execute the search.
 2.  **Hybrid Retrieval:** To find the needle in the haystack, I couldn't rely on just one type of search. I combined **Vector Search** (for concepts) with **Keyword Search** (for exact court names or dates) using a technique called Reciprocal Rank Fusion. This ensures the most relevant cases bubble to the top.
@@ -40,8 +40,8 @@ This isn't just a standard chatbot. I wanted to see if the system could handle d
 - **Advisory Queries:** You can ask something personal like, _"I was arrested for bribing an officer, what should I do?"_ The system retrieves relevant legal provisions (like the PC Act) and gives procedural advice.
 - **Broad Summarization:** You can also ask, _"Summarize all bribery cases from 2025."_ The Planner recognizes this requires a broad search, pulls multiple documents from that year, and synthesizes them into a single report.
 
-![Main Chat Window 1](/lds/main-chat-1.png)
-![Main Chat Window 2](/lds/main-chat-2.png)
+![Main Chat Window 1](/projects/lds/main-chat-1.png)
+![Main Chat Window 2](/projects/lds/main-chat-2.png)
 
 ### 2. Petition Drafting
 
@@ -49,7 +49,7 @@ This was the core goal of the internship. The user uploads a PDF petition, and t
 
 It then searches the database for precedents that favor the respondent and drafts a formal legal reply, complete with placeholders for facts it doesn't know. It's designed to never invent details, only using what is in the database or the uploaded file.
 
-![Petition Drafting Window](/lds/petition-drafting.png)
+![Petition Drafting Window](/projects/lds/petition-drafting.png)
 
 ## The Challenge: Precision at Scale
 

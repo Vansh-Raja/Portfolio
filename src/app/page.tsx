@@ -28,7 +28,7 @@ export default async function Home() {
       <section className="flex flex-col items-start gap-8 md:flex-row-reverse md:items-center md:justify-between">
         <ProfileImage
           className="rounded-lg"
-          src="/profile_photo.png"
+          src="/profile.png"
           alt="Photo of Vansh"
           width={175}
           height={175}
@@ -44,7 +44,8 @@ export default async function Home() {
           </p>
 
           <p className="mt-4 max-w-sm text-balance text-sm sm:text-base">
-            ML Engineer by profession, problem solver by passion. I often self-host the apps I build.
+            ML Engineer by profession, problem solver by passion. I often
+            self-host the apps I build.
           </p>
 
           <div className="mt-6 flex items-center gap-1">
