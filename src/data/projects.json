@@ -17,6 +17,32 @@
       "blogSlug": "sshthing"
     },
     {
+      "name": "Legal Drafting System",
+      "description": "Multi-Agent RAG system that auto-drafts legal replies from 2,000+ Indian court judgments. Features an AI pipeline with query planning, hybrid search (vector + keyword), and a filtration agent. Supports petition upload for precedent-based rebuttals and an advisory chat interface.",
+      "image": "/lds/main-chat-1.png",
+      "tags": [
+        "Python",
+        "PostgreSQL",
+        "PGVector",
+        "LangChain",
+        "Streamlit",
+        "Ollama",
+        "OpenAI",
+        "pdfminer"
+      ],
+      "links": [
+        {
+          "name": "Source",
+          "href": "https://github.com/Vansh-Raja/LegalDraftingSystem",
+          "icon": "github"
+        }
+      ],
+      "duration": "Oct '25",
+      "team": "Solo",
+      "blogSlug": "lds",
+      "demoUrl": "https://lds.vanshraja.me"
+    },
+    {
       "name": "Data Loss Prevention",
       "description": "Cross-platform DLP agents (Windows/Linux) that watch file-system, clipboard, and PII events, forwarding everything in real time to a FastAPI backbone with PostgreSQL, Redis, and OpenSearch for policy checks and incident logging. Shipped as a Docker Compose stack for quick deploys.",
       "tags": [
@@ -38,29 +64,6 @@
       ],
       "duration": "Nov ‘25",
       "team": "2 members"
-    },
-    {
-      "name": "Legal Drafting System",
-      "description": "RAG legal assistant with two modes: upload a petition to pull case law and draft replies, or chat over a PGVector-indexed corpus of Indian judgments. Built ingestion for text + metadata, hybrid retrieval (vector + PostgreSQL FTS), LLM query planning, and context assembly; shipped with a Streamlit UI and multiple model backends (Ollama/OpenAI/OpenRouter).",
-      "tags": [
-        "Python",
-        "PostgreSQL",
-        "PGVector",
-        "LangChain",
-        "Streamlit",
-        "Ollama",
-        "OpenAI",
-        "pdfminer"
-      ],
-      "links": [
-        {
-          "name": "Source",
-          "href": "https://github.com/Vansh-Raja/LegalDraftingSystem",
-          "icon": "github"
-        }
-      ],
-      "duration": "Oct ‘25",
-      "team": "Solo"
     },
     {
       "name": "Sunshine Bot",
