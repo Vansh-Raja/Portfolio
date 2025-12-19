@@ -1,6 +1,22 @@
 {
   "projects": [
     {
+      "name": "SSHThing",
+      "description": "A TUI SSH manager built with Go and Bubble Tea. Save, organize, and connect to SSH hosts securely—all from the terminal. Features encrypted storage (SQLCipher + AES-GCM), spotlight search, multi-device sync via GitHub, and macOS Finder mounts.",
+      "image": "/sshthing/main-view.png",
+      "tags": ["Go", "Bubble Tea", "SQLCipher", "AES-GCM", "TUI", "macOS"],
+      "links": [
+        {
+          "name": "Source",
+          "href": "https://github.com/Vansh-Raja/SSHThing",
+          "icon": "github"
+        }
+      ],
+      "duration": "Dec '25",
+      "team": "Solo",
+      "blogSlug": "sshthing"
+    },
+    {
       "name": "Data Loss Prevention",
       "description": "Cross-platform DLP agents (Windows/Linux) that watch file-system, clipboard, and PII events, forwarding everything in real time to a FastAPI backbone with PostgreSQL, Redis, and OpenSearch for policy checks and incident logging. Shipped as a Docker Compose stack for quick deploys.",
       "tags": [

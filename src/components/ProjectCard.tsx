@@ -14,41 +14,38 @@ import Link from "next/link";
 import Markdown from "react-markdown";
 import Icon from "./Icon";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   project: Project;
 }
 
-// Helper to pick a category based on project name
-function getCategory(name: string) {
-  const categories = ["ai", "book", "album", "movie", "game", "fashion", "dashboard", "crm", "finance", "calendar", "messenger"];
-  // Use char code sum for deterministic but varied selection
-  const sum = name.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
-  return categories[sum % categories.length];
-}
-
 export function ProjectCard({ project }: Props) {
-  const { name, href, description, image, tags, links, duration, team } = project;
+  const { name, description, image, tags, links, blogSlug, demoUrl } = project;
   const [imageError, setImageError] = useState(false);
+  const router = useRouter();
 
-  // Use lorem.space as fallback (returns jpg/png)
-  const category = getCategory(name);
-  const fallbackUrl = `https://api.lorem.space/image/${category}?w=500&h=300&hash=${encodeURIComponent(name)}`;
+  const handleCardClick = () => {
+    if (blogSlug) {
+      router.push(`/blog/${blogSlug}`);
+    }
+  };
 
   return (
-    <Card className="flex flex-col">
+    <Card
+      className={`flex flex-col ${blogSlug ? "cursor-pointer transition-shadow hover:shadow-lg" : ""}`}
+      onClick={handleCardClick}
+    >
       <CardHeader>
         {image && !imageError ? (
-          <Link href={href || image}>
-            <Image
-              src={image}
-              alt={name}
-              width={500}
-              height={300}
-              className="h-40 w-full object-cover object-top"
-              onError={() => setImageError(true)}
-            />
-          </Link>
+          <Image
+            src={image}
+            alt={name}
+            width={500}
+            height={300}
+            className="h-40 w-full object-cover object-top"
+            onError={() => setImageError(true)}
+          />
         ) : null}
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
@@ -71,18 +68,35 @@ export function ProjectCard({ project }: Props) {
             ))}
           </div>
         )}
-        {links && links.length > 0 && (
-          <div className="flex flex-row flex-wrap items-start gap-1">
-            {links.toSorted().map((link, idx) => (
-              <Link href={link?.href} key={idx} target="_blank">
-                <Badge key={idx} className="flex gap-2 px-2 py-1 text-[10px]">
+        <div className="flex flex-row flex-wrap items-start gap-1">
+          {links &&
+            links.length > 0 &&
+            links.toSorted().map((link, idx) => (
+              <Link
+                href={link?.href}
+                key={idx}
+                target="_blank"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Badge className="flex gap-2 px-2 py-1 text-[10px]">
                   <Icon name={link.icon} className="size-3" />
                   {link.name}
                 </Badge>
               </Link>
             ))}
-          </div>
-        )}
+          {demoUrl && (
+            <Link
+              href={demoUrl}
+              target="_blank"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Badge className="flex gap-2 px-2 py-1 text-[10px]">
+                <Icon name="play" className="size-3" />
+                Demo
+              </Badge>
+            </Link>
+          )}
+        </div>
       </CardFooter>
     </Card>
   );

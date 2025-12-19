@@ -29,6 +29,8 @@ const project = z.object({
   links: z.array(iconLink),
   duration: z.string().optional(),
   team: z.string().optional(),
+  blogSlug: z.string().optional(),
+  demoUrl: z.string().url().optional(),
 });
 export const projectSchema = z.object({ projects: z.array(project) });
 export type Project = z.infer<typeof project>;
