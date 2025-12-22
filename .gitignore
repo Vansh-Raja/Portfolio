@@ -37,6 +37,8 @@ next-env.d.ts
 
 .env
 
-# Vector store manifest (auto-generated)
-.vector-store-manifest.json
+# Vector store temp files
 .temp-uploads/
+
+# Local manifest (Vercel uses .vercel/cache)
+.vector-store-manifest.json

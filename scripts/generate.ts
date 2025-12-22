@@ -12,7 +12,18 @@ import OpenAI from "openai";
 // ============================================================================
 
 const VECTOR_STORE_NAME = "vansh-portfolio-knowledge-base";
-const MANIFEST_PATH = path.join(process.cwd(), ".vector-store-manifest.json");
+
+// IMPORTANT: Persist manifest across Vercel builds using build cache.
+// Vercel restores `.vercel/cache` between deployments, while the repo workspace
+// is a fresh clone each time.
+const MANIFEST_PATH = process.env.VERCEL
+  ? path.join(
+      process.cwd(),
+      ".vercel",
+      "cache",
+      "openai-vector-store-manifest.json",
+    )
+  : path.join(process.cwd(), ".vector-store-manifest.json");
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const DATA_DIR = path.join(process.cwd(), "src/data");
 const APP_DIR = path.join(process.cwd(), "src/app");
@@ -105,6 +116,54 @@ function getChangedFiles(): Set<string> | null {
   }
 }
 
+function getImpactedSourceIdsFromGitChangedFiles(
+  gitChangedFiles: Set<string> | null,
+): Set<string> | null {
+  if (!gitChangedFiles) {
+    return null;
+  }
+
+  const impacted = new Set<string>();
+
+  for (const absPath of Array.from(gitChangedFiles)) {
+    const relPath = path.relative(process.cwd(), absPath).replace(/\\/g, "/");
+
+    // Blog posts
+    if (relPath.startsWith("content/") && relPath.endsWith(".mdx")) {
+      const slug = path.basename(relPath, ".mdx");
+      impacted.add(`blog:${slug}`);
+      continue;
+    }
+
+    // Data files + derived summaries
+    if (relPath.startsWith("src/data/") && relPath.endsWith(".json")) {
+      const filename = path.basename(relPath);
+      impacted.add(`data:${filename}`);
+
+      if (filename === "career.json") {
+        impacted.add("summary:career");
+      }
+      if (filename === "technologies.json") {
+        impacted.add("summary:technologies");
+      }
+      if (filename === "site-pages.json") {
+        impacted.add("summary:site-pages");
+      }
+      continue;
+    }
+
+    // Route pages
+    if (relPath.startsWith("src/app/") && relPath.endsWith("page.tsx")) {
+      const url =
+        relPath.replace("src/app", "").replace("/page.tsx", "") || "/";
+      impacted.add(`route:${url}`);
+      continue;
+    }
+  }
+
+  return impacted;
+}
+
 function loadManifest(): Manifest | null {
   try {
     if (fs.existsSync(MANIFEST_PATH)) {
@@ -117,6 +176,7 @@ function loadManifest(): Manifest | null {
 }
 
 function saveManifest(manifest: Manifest): void {
+  fs.mkdirSync(path.dirname(MANIFEST_PATH), { recursive: true });
   fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2));
 }
 
@@ -320,6 +380,42 @@ function generateSummaries(): ContentDocument[] {
 // OpenAI Vector Store Functions
 // ============================================================================
 
+async function fetchExistingFilesFromVectorStore(
+  openai: OpenAI,
+  vectorStoreId: string,
+): Promise<Map<string, string>> {
+  // Returns a map of filename -> fileId for files already in the vector store
+  const existingFiles = new Map<string, string>();
+
+  try {
+    // List all files in the vector store
+    const files = await openai.beta.vectorStores.files.list(vectorStoreId, {
+      limit: 100,
+    });
+
+    for (const file of files.data) {
+      try {
+        // Get the file details to get the filename
+        const fileDetails = await openai.files.retrieve(
+          (file as any).file_id ?? file.id,
+        );
+        if (fileDetails.filename) {
+          // Store the underlying OpenAI file id (file_...), not the vector-store-file id.
+          existingFiles.set(fileDetails.filename, fileDetails.id);
+        }
+      } catch (e) {
+        // File might not be accessible
+      }
+    }
+
+    console.log(`Found ${existingFiles.size} existing files in vector store`);
+  } catch (e) {
+    console.log("Could not fetch existing files from vector store");
+  }
+
+  return existingFiles;
+}
+
 async function getOrCreateVectorStore(
   openai: OpenAI,
 ): Promise<{ id: string; isNew: boolean }> {
@@ -412,7 +508,7 @@ async function waitForVectorStoreReady(
   console.log("Waiting for vector store to process files...");
 
   let attempts = 0;
-  const maxAttempts = 60; // 5 minutes max
+  const maxAttempts = 12; // ~1 minute max
 
   while (attempts < maxAttempts) {
     const store = await openai.beta.vectorStores.retrieve(vectorStoreId);
@@ -462,11 +558,54 @@ async function syncVectorStore() {
 
   // Load existing manifest
   let manifest = loadManifest();
+  let manifestWasMissing = false;
+
   if (!manifest || manifest.vectorStoreId !== vectorStoreId) {
+    manifestWasMissing = true;
+    console.log("No manifest found, fetching existing files from OpenAI...");
+
+    // Fetch existing files from the vector store to rebuild manifest
+    const existingFiles = await fetchExistingFilesFromVectorStore(
+      openai,
+      vectorStoreId,
+    );
+
     manifest = {
       vectorStoreId,
       files: {},
     };
+
+    // We'll mark existing files as "already uploaded" with a placeholder hash
+    // This prevents re-uploading, but we'll update the hash after we compute it
+    for (const [filename, fileId] of Array.from(existingFiles.entries())) {
+      // Try to determine sourceId from filename
+      let sourceId = "";
+      if (filename.startsWith("route-")) {
+        const urlPart = filename.replace("route-", "").replace(".txt", "");
+        sourceId = `route:${urlPart === "" || urlPart === "-" ? "/" : urlPart.replace(/-/g, "/")}`;
+      } else if (filename.startsWith("blog-")) {
+        const slug = filename.replace("blog-", "").replace(".md", "");
+        sourceId = `blog:${slug}`;
+      } else if (filename.endsWith(".json")) {
+        sourceId = `data:${filename}`;
+      } else if (filename.includes("-summary")) {
+        const type = filename.replace("-summary.txt", "");
+        sourceId = `summary:${type}`;
+      }
+
+      if (sourceId) {
+        manifest.files[sourceId] = {
+          openaiFileId: fileId,
+          sha256: "__existing__", // Placeholder - will be updated or re-uploaded
+          url: "",
+          kind: "data",
+        };
+      }
+    }
+
+    console.log(
+      `Rebuilt manifest with ${Object.keys(manifest.files).length} existing files\n`,
+    );
   }
 
   // Collect all documents
@@ -485,6 +624,9 @@ async function syncVectorStore() {
   if (gitChangedFiles) {
     console.log(`Git detected ${gitChangedFiles.size} changed files`);
   }
+
+  const impactedSourceIds =
+    getImpactedSourceIdsFromGitChangedFiles(gitChangedFiles);
 
   // Determine what needs to be uploaded/deleted
   const currentSourceIds = new Set(allDocuments.map((d) => d.sourceId));
@@ -507,6 +649,18 @@ async function syncVectorStore() {
     if (!existing) {
       // New file
       toUpload.push(doc);
+    } else if (existing.sha256 === "__existing__") {
+      // File exists in OpenAI but we don't know if content changed.
+      // If git says the underlying source changed, treat it as changed.
+      if (impactedSourceIds?.has(doc.sourceId)) {
+        toUpload.push(doc);
+        toDelete.push(doc.sourceId);
+      } else {
+        // Otherwise, trust that the existing upload is still valid.
+        manifest.files[doc.sourceId].sha256 = hash;
+        manifest.files[doc.sourceId].url = doc.url;
+        manifest.files[doc.sourceId].kind = doc.kind;
+      }
     } else if (existing.sha256 !== hash) {
       // Content changed
       toUpload.push(doc);
@@ -522,6 +676,11 @@ async function syncVectorStore() {
 
   if (toDelete.length === 0 && toUpload.length === 0) {
     console.log("No changes detected. Vector store is up to date!");
+    // Save manifest if it was rebuilt from OpenAI
+    if (manifestWasMissing) {
+      saveManifest(manifest);
+      console.log("Manifest saved for future builds.");
+    }
     return;
   }
 
@@ -558,13 +717,22 @@ async function syncVectorStore() {
     }
   }
 
-  // Wait for processing
-  if (toUpload.length > 0) {
-    await waitForVectorStoreReady(openai, vectorStoreId);
-  }
-
-  // Save manifest
+  // Save manifest BEFORE waiting so a slow index build doesn't cause
+  // the next deployment to re-upload everything again.
   saveManifest(manifest);
+
+  // Wait for processing (best-effort). Indexing can sometimes take longer than
+  // a Vercel build allows.
+  if (toUpload.length > 0) {
+    try {
+      await waitForVectorStoreReady(openai, vectorStoreId);
+    } catch (error: any) {
+      console.warn(
+        "Vector store is still processing; continuing build without waiting:",
+        error?.message ?? error,
+      );
+    }
+  }
 
   console.log("\nSync complete!");
   console.log(`Vector store ID: ${vectorStoreId}`);
