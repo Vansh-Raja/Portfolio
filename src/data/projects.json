@@ -44,7 +44,8 @@
     },
     {
       "name": "Data Loss Prevention",
-      "description": "Cross-platform DLP agents (Windows/Linux) that watch file-system, clipboard, and PII events, forwarding everything in real time to a FastAPI backbone with PostgreSQL, Redis, and OpenSearch for policy checks and incident logging. Shipped as a Docker Compose stack for quick deploys.",
+      "description": "Proof-of-concept DLP system with cross-platform agents (Windows/Linux) that monitor files, clipboard, and USB devices. Detects sensitive data like Aadhaar numbers, API keys, and passwords. Features a React dashboard for live events, agent status, and policy management. Includes Google Drive integration.",
+      "image": "/projects/dlp/dashboard.jpeg",
       "tags": [
         "Python",
         "FastAPI",
@@ -53,7 +54,8 @@
         "OpenSearch",
         "Docker",
         "Windows",
-        "Linux"
+        "Linux",
+        "React"
       ],
       "links": [
         {
@@ -62,8 +64,9 @@
           "icon": "github"
         }
       ],
-      "duration": "Nov ‘25",
-      "team": "2 members"
+      "duration": "Nov '25",
+      "team": "2 members",
+      "blogSlug": "dlp"
     },
     {
       "name": "Sunshine Bot",
