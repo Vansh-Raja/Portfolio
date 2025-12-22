@@ -1,93 +1,26 @@
 ---
-title: "So Slow I Replaced It: Moving RAG from Astra DB to OpenAI"
-summary: "How I moved my portfolio's RAG system from a serverless vector DB to a simple, local-first OpenAI implementation to fix cold starts and save costs."
+title: "I Got Tired of My Database Sleeping"
+summary: "How I replaced my portfolio's vector database after getting frustrated with hibernation issues."
 image: "/profile.png"
 publishedAt: "2025-12-22"
 ---
 
-When I added the "Chat with Vansh" feature to this portfolio, I needed a way for the AI to know about my projects, my experience, and my blog posts. I needed RAG (Retrieval-Augmented Generation).
+My portfolio has a chatbot. It answers questions about my projects and experience.
 
-Naturally, I reached for a Vector Database. Everyone suggests them. I picked Astra DB because they have a generous free tier and a serverless architecture.
+For the AI to know anything about me, it needs to search through my content first. That's called RAG — the bot retrieves relevant stuff, then answers based on it.
 
-It worked great—until it didn't.
+I was using Astra DB for this. Free tier, serverless, seemed perfect.
 
-## The Frustration
+Problem: the free tier hibernates after a couple days of no activity. When someone finally visits and tries to chat, the database is asleep. The request hangs. Sometimes it times out. Sometimes my builds just fail because the database won't wake up in time. Once it even deleted my data because I hadn't used it in a while.
 
-The problem with many "serverless" free tiers is that they fall asleep. If no one visits my portfolio for 48 hours, the database hibernates.
+I got tired of it.
 
-The next time someone tries to chat, the request hangs for 10–15 seconds while the database wakes up. By then, the user has closed the tab.
+So I started looking at alternatives. Vercel Postgres with pgvector was an option, but setting up migrations and managing SQL felt like overkill for a portfolio. I also considered just storing everything locally as a JSON file and doing the search in memory — but that felt hacky and would slow things down.
 
-It got worse. I set up my build pipeline to sync my content to the database every time I deployed. But if the database was hibernating, my build script would time out and fail. I found myself manually logging into the Astra console just to "poke" the database awake so I could deploy a typo fix.
+Then I remembered: I'm already using OpenAI for the chatbot itself. Why not use their vector store too?
 
-I realized I was managing a distributed database infrastructure for a blog that has, at most, a few hundred kilobytes of text.
+OpenAI has a vector store feature where you upload your files and they handle the rest. No database to manage. No hibernation. Same provider I'm already paying for.
 
-## The Alternatives
+So I switched. The chatbot is faster now, the code is simpler, and I don't have to babysit a sleeping database anymore.
 
-I needed something that was "always on" but didn't cost $20/month. I looked at a few options:
-
-### 1. Vercel Postgres (pgvector)
-
-This was a strong contender. I already use Vercel for hosting. But setting up migrations, managing connection pools, and debugging SQL queries felt like overkill just to search through a few dozen files.
-
-### 2. In-Memory Search (Local JSON)
-
-I considered just loading all the text into memory and doing a cosine similarity search right in the Next.js server function.
-**Why I rejected it:** It bloats the serverless function size and eats up RAM. Plus, computing embeddings on every request is slow.
-
-### 3. OpenAI Vector Stores
-
-OpenAI recently released "Vector Stores" for their Assistants API. You upload files, they handle the chunking, embedding, and storage. You just query it.
-**Why I chose it:** No database to manage. No cold starts. And for the amount of data I have, the storage cost is effectively zero.
-
-## The New Architecture
-
-I completely ripped out the database connection logic. Now, the flow is dead simple:
-
-1.  **Content Collection:** A script scans my `content/` (blogs), `data/` (JSON resumes), and `app/` (page routes) directories.
-2.  **Hashing:** It calculates a SHA256 hash for every file and compares it to a local manifest file.
-3.  **Incremental Sync:** It only uploads files that have changed since the last build.
-4.  **Retrieval:** When you chat, the app calls OpenAI's API to find relevant chunks.
-
-### The Sync Script
-
-I wrote a custom script (`scripts/generate.ts`) that runs during the build. It treats my local filesystem as the source of truth.
-
-```typescript
-// Simplified logic from my sync script
-async function syncVectorStore() {
-  const allDocs = collectDocuments(); // Read all MDX/JSON/TSX files
-  const manifest = loadManifest(); // Load previous state
-
-  for (const doc of allDocs) {
-    const hash = sha256(doc.content);
-
-    // Only upload if content changed
-    if (manifest[doc.id] !== hash) {
-      console.log(`Uploading ${doc.filename}...`);
-      await openai.beta.vectorStores.files.upload(storeId, doc.file);
-      manifest[doc.id] = hash;
-    }
-  }
-
-  saveManifest(manifest);
-}
-```
-
-This means my "database" is just my git repository. If I push a new blog post, the build script sees the new file, uploads it to OpenAI, and it's instantly available for chat.
-
-## The Benefits
-
-**1. Zero Cold Starts**
-OpenAI's API is always ready. The chat response time dropped from ~15s (worst case) to consistent sub-second retrieval.
-
-**2. Cleaner Code**
-I deleted hundreds of lines of code related to database connections, schema definitions, and error handling. My retrieval logic is now just a single API call wrapper.
-
-**3. Peace of Mind**
-My database can't get deleted for inactivity because I don't have one. My data lives in Git and is synced to OpenAI on demand.
-
-## Conclusion
-
-Sometimes the "enterprise-grade" solution is the wrong tool for the job. For a personal portfolio, a Vector Database was over-engineering. Moving to a file-based sync with a managed API made my site faster, my builds more reliable, and my life easier.
-
-Now, if you ask the chatbot about this migration, it will actually be able to answer you—without waking up a database first.
+There's a small cost, but for a portfolio this size it's basically nothing. And honestly? Sometimes the "free" option costs more in frustration than it's worth.
