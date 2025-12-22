@@ -1,4 +1,4 @@
-import { getVectorStore } from "@/lib/vectordb";
+import { getRetriever } from "@/lib/vectordb";
 import { UpstashRedisCache } from "@langchain/community/caches/upstash_redis";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
 import {
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     });
 
     const chatModel = new ChatOpenAI({
-      model: "gpt-5-nano",
+      model: "gpt-4o-mini",
       streaming: true,
       callbacks: [handlers],
       verbose: true, // logs to console
@@ -36,12 +36,13 @@ export async function POST(req: Request) {
     });
 
     const rephraseModel = new ChatOpenAI({
-      model: "gpt-5-nano",
+      model: "gpt-4o-mini",
       verbose: true,
       cache,
     });
 
-    const retriever = (await getVectorStore()).asRetriever();
+    // Use the new OpenAI Vector Store retriever
+    const retriever = getRetriever(5);
 
     // get a customised prompt based on chat history
     const chatHistory = messages
@@ -73,8 +74,8 @@ export async function POST(req: Request) {
     const prompt = ChatPromptTemplate.fromMessages([
       [
         "system",
-                "You are Vansh Support, a friendly chatbot for Vansh's personal developer portfolio website. " +
-        "You are trying to convince potential employers to hire Vansh as a software developer. " +
+        "You are Vansh Support, a friendly chatbot for Vansh's personal developer portfolio website. " +
+          "You are trying to convince potential employers to hire Vansh as a software developer. " +
           "Be concise and only answer the user's questions based on the provided context below. " +
           "Provide links to pages that contains relevant information about the topic from the given context. " +
           "Format your messages in markdown.\n\n" +

@@ -36,3 +36,7 @@ yarn-error.log*
 next-env.d.ts
 
 .env
+
+# Vector store manifest (auto-generated)
+.vector-store-manifest.json
+.temp-uploads/
