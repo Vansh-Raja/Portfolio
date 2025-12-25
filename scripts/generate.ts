@@ -13,13 +13,13 @@ import OpenAI from "openai";
 
 const VECTOR_STORE_NAME = "vansh-portfolio-knowledge-base";
 
-// IMPORTANT: Persist manifest across Vercel builds using build cache.
-// Vercel restores `.vercel/cache` between deployments, while the repo workspace
+// IMPORTANT: Persist manifest across Vercel builds.
+// Vercel reliably restores `.next/cache` between deployments; the repo workspace
 // is a fresh clone each time.
 const MANIFEST_PATH = process.env.VERCEL
   ? path.join(
       process.cwd(),
-      ".vercel",
+      ".next",
       "cache",
       "openai-vector-store-manifest.json",
     )
