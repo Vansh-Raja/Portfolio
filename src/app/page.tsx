@@ -71,8 +71,6 @@ export default async function Home() {
 
       <Experience />
 
-      <Technologies />
-
       <section className="flex flex-col gap-8">
         <div className="flex flex-col gap-2">
           <div className="flex justify-between">
@@ -94,6 +92,8 @@ export default async function Home() {
           <Projects limit={LIMIT} />
         </div>
       </section>
+
+      <Technologies />
 
       <section className="flex flex-col gap-8">
         <div className="flex justify-between">
