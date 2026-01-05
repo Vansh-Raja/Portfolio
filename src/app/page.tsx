@@ -1,6 +1,7 @@
 import Experience from "@/components/Experience";
 import LinkWithIcon from "@/components/LinkWithIcon";
 import Posts from "@/components/Posts";
+import ProjectNamesList from "@/components/ProjectNamesList";
 import Projects from "@/components/Projects";
 import Socials from "@/components/Socials";
 import { Button } from "@/components/ui/Button";
@@ -83,6 +84,7 @@ export default async function Home() {
           />
         </div>
         <Projects limit={LIMIT} />
+        <ProjectNamesList />
       </section>
 
       <section className="flex flex-col gap-8">
