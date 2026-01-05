@@ -74,17 +74,25 @@ export default async function Home() {
       <Technologies />
 
       <section className="flex flex-col gap-8">
-        <div className="flex justify-between">
-          <h2 className="title text-2xl sm:text-3xl">featured projects</h2>
-          <LinkWithIcon
-            href="/projects"
-            position="right"
-            icon={<ArrowRightIcon className="size-5" />}
-            text="view more"
-          />
+        <div className="flex flex-col gap-2">
+          <div className="flex justify-between">
+            <h2 className="title text-2xl sm:text-3xl">projects</h2>
+            <LinkWithIcon
+              href="/projects"
+              position="right"
+              icon={<ArrowRightIcon className="size-5" />}
+              text="view more"
+            />
+          </div>
+          <ProjectNamesList />
         </div>
-        <Projects limit={LIMIT} />
-        <ProjectNamesList />
+
+        <div className="flex flex-col gap-4">
+          <h3 className="title text-lg font-medium text-muted-foreground sm:text-xl">
+            featured
+          </h3>
+          <Projects limit={LIMIT} />
+        </div>
       </section>
 
       <section className="flex flex-col gap-8">

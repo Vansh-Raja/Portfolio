@@ -4,11 +4,17 @@ import data from "@/data/projects.json";
 import { projectSchema } from "@/lib/schemas";
 import Link from "next/link";
 
-export default function ProjectNamesList() {
+interface Props {
+  className?: string;
+}
+
+export default function ProjectNamesList({ className = "" }: Props) {
   const projects = projectSchema.parse(data).projects;
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-x-1 gap-y-1 text-sm text-muted-foreground">
+    <div
+      className={`flex flex-wrap items-center gap-x-1 gap-y-1 text-sm text-muted-foreground ${className}`}
+    >
       {projects.map((project, index) => {
         const href = project.blogSlug
           ? `/blog/${project.blogSlug}`
