@@ -92,6 +92,22 @@
       "blogSlug": "sunshinebot"
     },
     {
+      "name": "BudgetThing",
+      "description": "A minimal expense tracker for iPhone. Built with Swift and SwiftUI. One-screen workflow: type the amount, pick an emoji category, done. Fully offline, no sign-ups required.",
+      "image": "/projects/budgetthing/HomeScreen.jpeg",
+      "tags": ["Swift", "SwiftUI", "iOS"],
+      "links": [
+        {
+          "name": "Source",
+          "href": "https://github.com/Vansh-Raja/budgetthing-ios",
+          "icon": "github"
+        }
+      ],
+      "duration": "Jan '26",
+      "team": "Solo",
+      "blogSlug": "budgetthing"
+    },
+    {
       "name": "Food Demand Forecasting",
       "description": "Time-series pipeline to forecast food demand and cut waste. Built end-to-end MLOps with Kafka + PySpark for ingestion, DVC/MLflow for experiment tracking, and a Flask service to surface forecasts that improve inventory planning.",
       "image": "/projects/food-demand.png",
