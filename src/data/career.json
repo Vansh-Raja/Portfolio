@@ -3,9 +3,31 @@
     {
       "name": "Virtual Galaxy Infotech Ltd.",
       "href": "https://virtualgalaxyinfotech.com/",
+      "title": "Security Analyst",
+      "logo": "/logos/vgil.png",
+      "start": "Feb '26",
+      "description": [
+        "Building Vaani, a real-time multilingual conversational AI agent with per-turn language switching across Hindi, English, and Marathi. Custom Sarvam AI STT/TTS patches on LiveKit with a modular language pack architecture."
+      ],
+      "technologies": [
+        "LiveKit",
+        "Sarvam AI",
+        "Gemini",
+        "Python",
+        "FastAPI",
+        "React",
+        "WebRTC",
+        "Vite",
+        "Bun"
+      ]
+    },
+    {
+      "name": "Virtual Galaxy Infotech Ltd.",
+      "href": "https://virtualgalaxyinfotech.com/",
       "title": "Security Analyst Intern",
       "logo": "/logos/vgil.png",
-      "start": "Oct ‘25",
+      "start": "Oct '25",
+      "end": "Jan '26",
       "description": [
         "Built a RAG legal drafting system: ingested 5,000+ judgments into PGVector, ran PDF → metadata → chunking → embeddings, and served hybrid retrieval (vector + PostgreSQL FTS) with petition-aware drafting via Streamlit.",
         "Developed Windows/Linux DLP agents to monitor directories, clipboard, and PII; forwarded events in real time to a FastAPI backend with PostgreSQL, Redis, and OpenSearch for incident logging and policy actions."
