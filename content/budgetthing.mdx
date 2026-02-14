@@ -56,3 +56,19 @@ BudgetThing is in TestFlight right now. I worked on it heavily a few months ago,
 ---
 
 Built because I got tired of apps that made simple things complicated.
+
+---
+
+## Update — February 2026
+
+A lot has changed since I wrote this post. BudgetThing isn't a Swift app anymore.
+
+I rewrote the whole thing in **Expo** (React Native). The original app was offline-only and simple, but I wanted to add shared expenses — Splitwise-style trip splitting with friends — and that meant the app needed accounts, cloud sync, the works. Staying on Swift with no backend wasn't going to cut it.
+
+So now there's a proper **Convex** backend, **Clerk** auth with Sign in with Apple, and real multi-device sync. You can sign in on a new phone and your data is just there. That part I'm genuinely proud of — getting the sync engine right with offline-first SQLite and a pull-cursor pattern took some work.
+
+The Splitwise clone is fully baked in: create a trip, invite people with a join code, add expenses, split them five different ways (equal, percentage, shares, exact, or equal among selected people), and settle up. It tracks who owes who and suggests the minimum number of payments. All synced in real time across everyone's devices.
+
+The app also has a guest mode now — no sign-up required, everything works offline, and when you're ready to sync you just sign in and your data carries over.
+
+Still on TestFlight, still v2.0.4. Development has slowed down since I started working full-time, but I'm using it daily here in Nagpur to figure out what's still missing before an App Store launch.
