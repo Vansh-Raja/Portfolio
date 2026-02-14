@@ -1,0 +1,88 @@
+---
+title: "Giving Voice to Vaani: A Multilingual Conversational AI Agent"
+summary: "A real-time multilingual voice AI agent built on LiveKit with Sarvam AI and Gemini. Supports Hindi, English, and Marathi with per-turn language switching, custom STT/TTS patches, and a modular language pack architecture."
+image: "/projects/vaani/web-ui.png"
+publishedAt: "2026-02-14"
+---
+
+## Why Not Just Use ElevenLabs?
+
+When I started full-time at Virtual Galaxy, conversational AI was already on the roadmap. The team had researched ElevenLabs and other off-the-shelf platforms, but the goal was always to build something native — something the company owned and could customize for any use case, any language, without per-minute API bills piling up.
+
+A coworker had done the initial research and built the base **LiveKit** server code — room connections, the agent loop, the basic plumbing. He handed it to me and I started building on top of it.
+
+---
+
+## Starting With Marathi
+
+The first version was simple: Marathi-only, **Groq** for the LLM, **Sarvam AI** for speech-to-text and text-to-speech. It worked, but Groq's open-source models weren't sharp enough for Indian languages. Responses came back awkward, especially in Marathi.
+
+I switched the LLM to **Gemini 2.0 Flash** — significantly better at Hindi and Marathi, and the non-thinking model kept costs and latency low. That upgrade was straightforward. The hard part came next.
+
+---
+
+## Not an IVR — A Truly Multilingual Agent
+
+My manager had a specific requirement: this couldn't work like a typical IVR where you press 1 for English and get locked into that language. And it made sense — humans aren't perfect in natural conversations. Especially as Indians, we speak multiple languages and we naturally shift between them. You might explain something in Hindi, switch to English for a technical term, throw in Marathi because that's what feels comfortable. A rigid language selection at the start ignores how people actually talk. Nobody in the space was properly supporting this kind of seamless mid-conversation switching, and that's exactly why it was worth building.
+
+Gemini's STT had a bias problem. You had to set a base language, and the detection leaned heavily toward it — Marathi speakers kept getting classified as Hindi, Hindi as Marathi. Real conversations made it worse. People mix languages, speak informally, and there's always background noise or someone else talking nearby.
+
+I spent about a week on this. Tried different Gemini STT configurations, experimented with detection thresholds, looked into Sarvam's v2.5 — it had an "unknown" language mode but wasn't accurate enough for our use case. Then Sarvam released **Saaras v3**, and that changed things.
+
+---
+
+## Patching LiveKit
+
+Sarvam's v3 was a big improvement, but LiveKit's plugin hadn't caught up. The STT plugin didn't expose the `mode` parameter I needed, and the TTS plugin still only supported Bulbul v2.
+
+So I patched them. For STT, I added support for Saaras v3's **transliteration mode** — instead of getting Devanagari back from Hindi or Marathi speech, I get Latin script, which the rest of the pipeline handles more consistently. For TTS, I wrote a full custom **WebSocket adapter** for Bulbul v3 since the streaming API had breaking changes from v2 — different codec format, string-typed sample rates, new temperature controls.
+
+I also tuned LiveKit's interruption handling. The defaults were too sensitive for noisy Indian phone environments — background chatter would trigger false interruptions, cutting off the agent mid-sentence. Adjusting endpointing delays and interruption thresholds, plus adding false-interruption recovery, made a real difference.
+
+---
+
+## How the Switching Actually Works
+
+The language detection runs at three layers. Sarvam's STT detects the user's language each turn. If it's confident, that language propagates forward — a system message gets injected into the LLM telling it to respond in that language, and the TTS switches its voice. If Sarvam isn't sure, a fast **Gemini Flash** side-channel fires to classify the transcript as English, Hindi, or Marathi.
+
+The result: you can speak English, switch to Marathi next sentence, ask something in Hindi, and Vaani follows every turn.
+
+There's also a text sanitization layer that's language-aware — currency amounts like ₹8,500 get converted to spoken words in whichever language the agent is responding in. Same for dates, phone numbers, and addresses. Small thing, but it sounds terrible when a TTS engine tries to read "₹8,500" literally.
+
+<!-- TODO: Add screenshot of web UI -->
+<!-- TODO: Add call transcript screenshot showing language switches -->
+<!-- TODO: Add recording/demo -->
+
+---
+
+## Building the Frontend
+
+The original web demo was a single HTML page — glassmorphic forms, textareas dumping logs and transcripts, basic controls. It worked for testing but looked like a developer tool, not something you'd show a client.
+
+I rebuilt it from scratch using React 19, TypeScript, Vite, and Tailwind with **Claude Code** helping me move fast through the component structure. The design is brutalist with a saffron accent — the UI flows through phases: agent selection, customer selection, connecting, active call, and call ended. Each phase transitions cleanly instead of cramming everything onto one screen.
+
+The centerpiece is an animated avatar. A 500x500 GIF plays when the agent is speaking and swaps to a static PNG when idle, driven by LiveKit's `ActiveSpeakersChanged` events. When Vaani talks, a saffron drop-shadow glow pulses around the avatar. Below it, waveform bars animate with **Framer Motion** to give visual feedback that the agent is actually responding — small detail, but it makes the experience feel alive instead of staring at silence.
+
+![Vaani web UI showing the active call screen](/projects/vaani/web-ui.png)
+
+![Avatar with saffron glow during speech](/projects/vaani/avatar-speaking.png)
+
+---
+
+## Making It Modular
+
+Vaani isn't a one-off banking bot. I built it with a three-layer architecture: **language packs** define greetings, tone, and text rules per language. **Agent packs** define the prompt template and conversation logic per use case. **Language policy** controls which languages are allowed and how switching works.
+
+Adding a new language means writing one language pack. Adding a new agent means writing one prompt template. Right now there are two agents — one for banking EMI reminders and one for municipal tax — sharing the same worker, dispatched via metadata in the connection token.
+
+---
+
+## What's Next
+
+Vaani works well on web calls. SIP integration is next — I've tested an earlier version over phone lines and I'm fairly confident the multilingual pipeline will carry over. After that, it's about expanding the language and agent packs to cover more use cases.
+
+Right now we're using Sarvam AI because it's one of the cheapest and easiest out-of-the-box options for multilingual Indian-language speech. But once the product base is properly established, the plan is to explore local TTS models trained specifically for this — more control, lower latency, no external API dependency. First we build the foundation, then we optimize the pieces.
+
+---
+
+This started as "build something cheaper than ElevenLabs." It turned into building a voice AI that genuinely understands when you switch languages — and that was the part worth figuring out.
