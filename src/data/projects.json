@@ -27,20 +27,20 @@
       "blogSlug": "vaani"
     },
     {
-      "name": "SSHThing",
-      "description": "A TUI SSH manager built with Go and Bubble Tea. Save, organize, and connect to SSH hosts securely—all from the terminal. Features encrypted storage (SQLCipher + AES-GCM), spotlight search, multi-device sync via GitHub, and macOS Finder mounts.",
-      "image": "/projects/sshthing/main-view.png",
-      "tags": ["Go", "Bubble Tea", "SQLCipher", "AES-GCM", "TUI", "macOS"],
+      "name": "BudgetThing",
+      "description": "An expense tracker and Splitwise-style trip splitter for iPhone. Built with Expo (React Native), Convex backend, and Clerk auth. Offline-first with real-time multi-device sync.",
+      "image": "/projects/budgetthing/HomeScreen.jpeg",
+      "tags": ["Expo", "React Native", "Convex", "Clerk", "SQLite", "TypeScript"],
       "links": [
         {
           "name": "Source",
-          "href": "https://github.com/Vansh-Raja/SSHThing",
+          "href": "https://github.com/Vansh-Raja/budgetthing-ios",
           "icon": "github"
         }
       ],
-      "duration": "Dec '25",
+      "duration": "Jan '26 — Present",
       "team": "Solo",
-      "blogSlug": "sshthing"
+      "blogSlug": "budgetthing"
     },
     {
       "name": "Legal Drafting System",
@@ -95,6 +95,22 @@
       "blogSlug": "dlp"
     },
     {
+      "name": "SSHThing",
+      "description": "A TUI SSH manager built with Go and Bubble Tea. Save, organize, and connect to SSH hosts securely—all from the terminal. Features encrypted storage (SQLCipher + AES-GCM), spotlight search, multi-device sync via GitHub, and macOS Finder mounts.",
+      "image": "/projects/sshthing/main-view.png",
+      "tags": ["Go", "Bubble Tea", "SQLCipher", "AES-GCM", "TUI", "macOS"],
+      "links": [
+        {
+          "name": "Source",
+          "href": "https://github.com/Vansh-Raja/SSHThing",
+          "icon": "github"
+        }
+      ],
+      "duration": "Dec '25",
+      "team": "Solo",
+      "blogSlug": "sshthing"
+    },
+    {
       "name": "Sunshine Bot",
       "description": "Built in one week: a voice-first hospital booking bot you could call on a real phone number. Used ElevenLabs + Twilio for voice, a Flask API for booking logic, and Google Calendar as the admin interface with SQLite sync for fast conflict checks. Supports patient lookup, booking, rescheduling, cancellations, and availability queries.",
       "image": "/projects/sunshinebot/sunshinebot.png",
@@ -116,22 +132,6 @@
       "duration": "Nov '23 – Jan '24",
       "team": "Solo",
       "blogSlug": "sunshinebot"
-    },
-    {
-      "name": "BudgetThing",
-      "description": "An expense tracker and Splitwise-style trip splitter for iPhone. Built with Expo (React Native), Convex backend, and Clerk auth. Offline-first with real-time multi-device sync.",
-      "image": "/projects/budgetthing/HomeScreen.jpeg",
-      "tags": ["Expo", "React Native", "Convex", "Clerk", "SQLite", "TypeScript"],
-      "links": [
-        {
-          "name": "Source",
-          "href": "https://github.com/Vansh-Raja/budgetthing-ios",
-          "icon": "github"
-        }
-      ],
-      "duration": "Jan '26 — Present",
-      "team": "Solo",
-      "blogSlug": "budgetthing"
     },
     {
       "name": "Food Demand Forecasting",
