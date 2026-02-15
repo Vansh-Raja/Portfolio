@@ -1,16 +1,15 @@
 'use client';
 import { useState, useRef } from "react";
 import { Badge } from "@/components/ui/Badge";
-import { SiPython, SiNumpy, SiPandas, SiScikitlearn, SiTensorflow, SiDocker, SiRedis, SiFlask, SiMongodb, SiGit } from "react-icons/si";
-import { TbLayoutKanban } from "react-icons/tb";
+import { SiPython, SiNumpy, SiPandas, SiTensorflow, SiDocker, SiReact, SiTypescript, SiNextdotjs, SiMongodb, SiGit } from "react-icons/si";
 import * as Popover from "@radix-ui/react-popover";
 import technologiesData from "@/data/technologies.json";
 import { technologiesSchema } from "@/lib/schemas";
 
 // Icon mapping for technology icons
 const iconMap = {
-  SiPython, SiNumpy, SiPandas, SiScikitlearn, SiTensorflow, SiDocker, SiRedis,
-  SiFlask, SiMongodb, SiGit, TbLayoutKanban,
+  SiPython, SiNumpy, SiPandas, SiTensorflow, SiDocker, SiReact, SiTypescript, SiNextdotjs,
+  SiMongodb, SiGit,
 } as const;
 
 export default function Technologies() {

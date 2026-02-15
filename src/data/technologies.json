@@ -14,10 +14,6 @@
         "icon": "SiPandas"
       },
       {
-        "name": "Scikit-learn",
-        "icon": "SiScikitlearn"
-      },
-      {
         "name": "TensorFlow",
         "icon": "SiTensorflow"
       },
@@ -26,21 +22,26 @@
         "icon": "SiDocker"
       },
       {
-        "name": "Redis",
-        "icon": "SiRedis"
+        "name": "React",
+        "icon": "SiReact"
       },
       {
-        "name": "Scrum",
-        "icon": "TbLayoutKanban"
+        "name": "TypeScript",
+        "icon": "SiTypescript"
+      },
+      {
+        "name": "Next.js",
+        "icon": "SiNextdotjs"
       }
     ],
     "additional": [
       {
-        "label": "Data Science / ML",
+        "label": "AI & ML",
         "icon": "SiPython",
         "items": [
+          "Scikit-learn",
           "Polars",
-          "PySpark", 
+          "PySpark",
           "Dask",
           "H2O AutoML",
           "PyCaret",
@@ -50,18 +51,22 @@
           "Matplotlib",
           "Seaborn",
           "Plotly",
-          "LLM APIs (Groq, OpenAI, Google AI)"
+          "LLM APIs (Groq, OpenAI, Google AI)",
+          "LiveKit",
+          "RAG",
+          "Prompt Engineering"
         ]
       },
       {
-        "label": "Web & MLOps",
-        "icon": "SiFlask",
+        "label": "Frontend",
+        "icon": "SiReact",
         "items": [
-          "Flask",
-          "Streamlit", 
-          "FastAPI",
-          "MLflow",
-          "Docker"
+          "Tailwind CSS",
+          "Framer Motion",
+          "Vite",
+          "Radix UI",
+          "Streamlit",
+          "Dash"
         ]
       },
       {
@@ -70,7 +75,7 @@
         "items": [
           "Hadoop",
           "Kafka",
-          "SQL", 
+          "SQL",
           "PostgreSQL",
           "Cassandra",
           "MongoDB",
@@ -80,9 +85,13 @@
         ]
       },
       {
-        "label": "Other",
+        "label": "DevOps & Other",
         "icon": "SiGit",
         "items": [
+          "Flask",
+          "FastAPI",
+          "MLflow",
+          "Docker",
           "Oracle Cloud",
           "Git",
           "Scrum"
