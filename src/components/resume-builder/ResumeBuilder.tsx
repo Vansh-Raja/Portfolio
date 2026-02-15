@@ -12,6 +12,8 @@ import dynamic from "next/dynamic";
 import { Archivo, Space_Mono } from "next/font/google";
 import { pdf } from "@react-pdf/renderer";
 import { toast } from "sonner";
+import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
+import { useTheme } from "next-themes";
 import { FONT_OPTIONS } from "@/lib/resume-builder/fonts";
 import type {
   ResumeFormState,
@@ -68,14 +70,6 @@ const RED = "#E63946";
 const BLUE = "#457B9D";
 const YELLOW = "#F4A261";
 const DARK = "#1D3557";
-
-const sColors: Record<keyof SectionToggles, string> = {
-  education: RED,
-  experience: BLUE,
-  projects: YELLOW,
-  certifications: DARK,
-  skills: RED,
-};
 
 const SECTION_LABELS: Record<keyof SectionToggles, string> = {
   education: "Education",
@@ -290,6 +284,44 @@ export default function ResumeBuilder() {
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [fullscreenPreview, setFullscreenPreview] = useState(false);
 
+  /* theme */
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark = mounted && resolvedTheme === "dark";
+
+  const t = {
+    bg: isDark ? "#0c1222" : "#FFFDF7",
+    surface: isDark ? "#131d30" : "#fff",
+    previewBg: isDark ? "#0a0f1c" : "#f8f6f0",
+    fg: isDark ? "#dce4ee" : DARK,
+    muted: isDark ? "#5e6e82" : "#999",
+    secondary: isDark ? "#8494a7" : "#666",
+    disabled: isDark ? "#3d4d5e" : "#bbb",
+    veryDisabled: isDark ? "#2e3d4e" : "#ccc",
+    border: isDark ? "#1c2a3e" : "#ddd",
+    borderLight: isDark ? "#162030" : "#eee",
+    switchOff: isDark ? "#2a3a50" : "#ddd",
+    mutedLight: isDark ? "#5e6e82" : "#aaa",
+    dividerLight: isDark ? "#1c2a3e" : DARK + "20",
+    dividerMed: isDark ? "#233350" : DARK + "30",
+    dividerDark: isDark ? "#3d5070" : DARK + "60",
+    textSemi: isDark ? "#8494a7" : DARK + "80",
+    customBorder: isDark ? "#233350" : DARK + "40",
+    alphaTag: isDark ? "25" : "15",
+    alphaDivider: isDark ? "40" : "30",
+    alphaBullet: isDark ? "50" : "40",
+    selectedBg: isDark ? "rgba(255,255,255,0.06)" : DARK + "08",
+  };
+
+  const sColors: Record<keyof SectionToggles, string> = {
+    education: RED,
+    experience: BLUE,
+    projects: YELLOW,
+    certifications: isDark ? "#7B9FC4" : DARK,
+    skills: RED,
+  };
+
   /* debounced save */
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const debouncedSave = useCallback((s: ResumeFormState) => {
@@ -356,12 +388,12 @@ export default function ResumeBuilder() {
   return (
     <div
       className={`fixed inset-0 z-[100] flex flex-col overflow-hidden ${archivo.className}`}
-      style={{ background: "#FFFDF7", color: DARK }}
+      style={{ background: t.bg, color: t.fg }}
     >
       {/* ── Toolbar ── */}
       <header
         className="flex items-center justify-between border-b px-6 py-2"
-        style={{ borderColor: "#ddd", background: "#fff" }}
+        style={{ borderColor: t.border, background: t.surface }}
       >
         <div className="flex items-center gap-3">
           <a
@@ -381,9 +413,21 @@ export default function ResumeBuilder() {
         </div>
         <div className="flex items-center gap-2">
           <button
+            onClick={() => setTheme(isDark ? "light" : "dark")}
+            className="flex items-center justify-center rounded-sm border px-2 py-1 transition"
+            style={{ borderColor: t.border, color: t.muted }}
+            title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {isDark ? (
+              <SunIcon className="size-3.5 text-orange-300" />
+            ) : (
+              <MoonIcon className="size-3.5 text-indigo-400" />
+            )}
+          </button>
+          <button
             onClick={() => setShowResetConfirm(true)}
-            className="rounded-sm border px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition hover:bg-gray-50"
-            style={{ borderColor: "#ddd", color: "#999" }}
+            className="rounded-sm border px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition hover:bg-gray-50 dark:hover:bg-white/5"
+            style={{ borderColor: t.border, color: t.muted }}
           >
             Reset
           </button>
@@ -403,23 +447,23 @@ export default function ResumeBuilder() {
         <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/40">
           <div
             className="mx-4 w-full max-w-sm rounded-sm border-2 p-6"
-            style={{ background: "#fff", borderColor: DARK }}
+            style={{ background: t.surface, borderColor: t.fg }}
           >
             <h3
               className="mb-2 text-sm font-black uppercase tracking-wider"
-              style={{ color: DARK }}
+              style={{ color: t.fg }}
             >
               Reset all changes?
             </h3>
-            <p className="mb-4 text-xs" style={{ color: "#666" }}>
+            <p className="mb-4 text-xs" style={{ color: t.secondary }}>
               This will discard all your customizations and restore the
               default resume content. This action cannot be undone.
             </p>
             <div className="flex gap-2">
               <button
                 onClick={() => setShowResetConfirm(false)}
-                className="flex-1 rounded-sm border px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider transition hover:bg-gray-50"
-                style={{ borderColor: "#ddd" }}
+                className="flex-1 rounded-sm border px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider transition hover:bg-gray-50 dark:hover:bg-white/5"
+                style={{ borderColor: t.border }}
               >
                 Cancel
               </button>
@@ -439,11 +483,11 @@ export default function ResumeBuilder() {
       {fullscreenPreview && (
         <div
           className="fixed inset-0 z-[200] flex flex-col"
-          style={{ background: "#f8f6f0" }}
+          style={{ background: t.previewBg }}
         >
           <div
             className="flex items-center justify-between border-b px-6 py-2"
-            style={{ borderColor: "#ddd", background: "#fff" }}
+            style={{ borderColor: t.border, background: t.surface }}
           >
             <div className="flex items-center gap-2">
               <div className="flex gap-0.5">
@@ -457,8 +501,8 @@ export default function ResumeBuilder() {
             </div>
             <button
               onClick={() => setFullscreenPreview(false)}
-              className="rounded-sm border px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition hover:bg-gray-50"
-              style={{ borderColor: "#ddd", color: DARK }}
+              className="rounded-sm border px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition hover:bg-gray-50 dark:hover:bg-white/5"
+              style={{ borderColor: t.border, color: t.fg }}
             >
               Close
             </button>
@@ -490,8 +534,8 @@ export default function ResumeBuilder() {
               }
               className="mb-1 w-full border-0 bg-transparent text-3xl font-black uppercase tracking-wide outline-none"
               style={{
-                color: DARK,
-                borderBottom: `3px solid ${DARK}`,
+                color: t.fg,
+                borderBottom: `3px solid ${t.fg}`,
                 paddingBottom: 4,
               }}
             />
@@ -515,8 +559,8 @@ export default function ResumeBuilder() {
                     }
                     className="border-b bg-transparent pb-0.5 text-xs outline-none transition focus:border-[#E63946]"
                     style={{
-                      borderColor: "#ddd",
-                      color: DARK,
+                      borderColor: t.border,
+                      color: t.fg,
                       width: f === "website" ? 200 : 150,
                     }}
                   />
@@ -529,7 +573,7 @@ export default function ResumeBuilder() {
               <div className="mb-2 flex items-center gap-2">
                 <div
                   className="h-0.5 flex-1"
-                  style={{ background: DARK + "20" }}
+                  style={{ background: t.dividerLight }}
                 />
                 <span
                   className={`text-[9px] font-bold uppercase tracking-[0.15em] ${spaceMono.className}`}
@@ -539,7 +583,7 @@ export default function ResumeBuilder() {
                 </span>
                 <div
                   className="h-0.5 flex-1"
-                  style={{ background: DARK + "20" }}
+                  style={{ background: t.dividerLight }}
                 />
               </div>
               <div className="flex flex-wrap gap-1.5">
@@ -552,19 +596,19 @@ export default function ResumeBuilder() {
                     className="border-2 px-3 py-1.5 text-[10px] font-bold transition"
                     style={{
                       borderColor:
-                        state.fontFamily === f.value ? DARK : "#ddd",
+                        state.fontFamily === f.value ? t.fg : t.border,
                       color:
-                        state.fontFamily === f.value ? DARK : "#999",
+                        state.fontFamily === f.value ? t.fg : t.muted,
                       background:
                         state.fontFamily === f.value
-                          ? DARK + "08"
+                          ? t.selectedBg
                           : "transparent",
                     }}
                   >
                     <span>{f.label}</span>
                     <span
                       className={`ml-1.5 text-[8px] font-normal ${spaceMono.className}`}
-                      style={{ color: "#aaa" }}
+                      style={{ color: t.mutedLight }}
                     >
                       {f.style.split(" \u2014 ")[1]}
                     </span>
@@ -583,7 +627,7 @@ export default function ResumeBuilder() {
                   <div className="mb-3 flex items-center gap-2">
                     <div
                       className="h-0.5 flex-1"
-                      style={{ background: color + "30" }}
+                      style={{ background: color + t.alphaDivider }}
                     />
                     <div
                       className="h-3 w-3 rotate-45"
@@ -591,7 +635,7 @@ export default function ResumeBuilder() {
                     />
                     <div
                       className="h-0.5 flex-1"
-                      style={{ background: color + "30" }}
+                      style={{ background: color + t.alphaDivider }}
                     />
                   </div>
 
@@ -608,7 +652,7 @@ export default function ResumeBuilder() {
                             transform: isOpen
                               ? "rotate(90deg)"
                               : "rotate(0deg)",
-                            color: "#999",
+                            color: t.muted,
                           }}
                         >
                           &#9654;
@@ -663,7 +707,7 @@ export default function ResumeBuilder() {
                       }
                       className="flex h-5 w-9 items-center rounded-full px-0.5 transition"
                       style={{
-                        background: state.sections[k] ? color : "#ddd",
+                        background: state.sections[k] ? color : t.switchOff,
                       }}
                     >
                       <span
@@ -771,7 +815,7 @@ export default function ResumeBuilder() {
                                       at {data.name}
                                       <span
                                         className={`ml-2 text-[9px] ${spaceMono.className}`}
-                                        style={{ color: "#999" }}
+                                        style={{ color: t.muted }}
                                       >
                                         {data.start}{" "}
                                         {data.end
@@ -797,15 +841,15 @@ export default function ResumeBuilder() {
                                               bulletIndex: j,
                                             })
                                           }
-                                          className="flex w-full items-center gap-2 py-0.5 text-left text-[11px] transition hover:bg-black/5"
+                                          className="flex w-full items-center gap-2 py-0.5 text-left text-[11px] transition hover:bg-black/5 dark:hover:bg-white/5"
                                           style={{
                                             color:
                                               entry
                                                 .enabledBullets[
                                                 j
                                               ]
-                                                ? DARK
-                                                : "#bbb",
+                                                ? t.fg
+                                                : t.disabled,
                                           }}
                                         >
                                           <span
@@ -844,7 +888,7 @@ export default function ResumeBuilder() {
                                             key={`cb-${cbIdx}`}
                                             className="flex items-center gap-2 py-0.5 text-[11px]"
                                             style={{
-                                              color: DARK,
+                                              color: t.fg,
                                             }}
                                           >
                                             <span
@@ -852,7 +896,7 @@ export default function ResumeBuilder() {
                                               style={{
                                                 background:
                                                   color +
-                                                  "40",
+                                                  t.alphaBullet,
                                               }}
                                             />
                                             <span className="flex-1">
@@ -930,8 +974,8 @@ export default function ResumeBuilder() {
                                           className="flex-1 border-b bg-transparent px-1 py-0.5 text-[10px] outline-none transition focus:border-[#E63946]"
                                           style={{
                                             borderColor:
-                                              "#eee",
-                                            color: DARK,
+                                              t.borderLight,
+                                            color: t.fg,
                                           }}
                                         />
                                         <button
@@ -977,24 +1021,24 @@ export default function ResumeBuilder() {
                                           <span
                                             className={`text-[8px] font-bold uppercase ${spaceMono.className}`}
                                             style={{
-                                              color: "#999",
+                                              color: t.muted,
                                             }}
                                           >
                                             Tools:
                                           </span>
                                           {data.technologies.map(
-                                            (t) => (
+                                            (tech) => (
                                               <span
-                                                key={t}
+                                                key={tech}
                                                 className="rounded-sm px-1.5 py-0.5 text-[9px]"
                                                 style={{
                                                   background:
                                                     color +
-                                                    "15",
-                                                  color: DARK,
+                                                    t.alphaTag,
+                                                  color: t.fg,
                                                 }}
                                               >
-                                                {t}
+                                                {tech}
                                               </span>
                                             ),
                                           )}
@@ -1076,7 +1120,7 @@ export default function ResumeBuilder() {
                                         <span
                                           className={`ml-2 text-[9px] ${spaceMono.className}`}
                                           style={{
-                                            color: "#999",
+                                            color: t.muted,
                                           }}
                                         >
                                           {data.duration}
@@ -1090,7 +1134,7 @@ export default function ResumeBuilder() {
                                     <div
                                       className="text-[10px]"
                                       style={{
-                                        color: "#666",
+                                        color: t.secondary,
                                       }}
                                     >
                                       {entry.descriptionOverride ??
@@ -1105,12 +1149,12 @@ export default function ResumeBuilder() {
                                               entryIdx,
                                           })
                                         }
-                                        className="flex items-center gap-1.5 text-[10px] transition hover:bg-black/5"
+                                        className="flex items-center gap-1.5 text-[10px] transition hover:bg-black/5 dark:hover:bg-white/5"
                                         style={{
                                           color:
                                             entry.showLink
-                                              ? DARK
-                                              : "#bbb",
+                                              ? t.fg
+                                              : t.disabled,
                                         }}
                                       >
                                         <span
@@ -1138,7 +1182,7 @@ export default function ResumeBuilder() {
                                           <span
                                             className="ml-1 truncate text-[8px]"
                                             style={{
-                                              color: "#999",
+                                              color: t.muted,
                                               maxWidth: 200,
                                             }}
                                           >
@@ -1149,18 +1193,18 @@ export default function ResumeBuilder() {
                                     )}
                                     <div className="flex flex-wrap gap-1">
                                       {data.tags.map(
-                                        (t) => (
+                                        (tag) => (
                                           <span
-                                            key={t}
+                                            key={tag}
                                             className="rounded-sm px-1.5 py-0.5 text-[9px]"
                                             style={{
                                               background:
                                                 color +
-                                                "15",
-                                              color: DARK,
+                                                t.alphaTag,
+                                              color: t.fg,
                                             }}
                                           >
-                                            {t}
+                                            {tag}
                                           </span>
                                         ),
                                       )}
@@ -1237,11 +1281,11 @@ export default function ResumeBuilder() {
                                         borderColor:
                                           item.enabled
                                             ? color
-                                            : "#eee",
+                                            : t.borderLight,
                                         color:
                                           item.enabled
-                                            ? DARK
-                                            : "#ccc",
+                                            ? t.fg
+                                            : t.veryDisabled,
                                       }}
                                     >
                                       {item.name}
@@ -1263,21 +1307,21 @@ export default function ResumeBuilder() {
               <div className="mb-3 flex items-center gap-2">
                 <div
                   className="h-0.5 flex-1"
-                  style={{ background: DARK + "30" }}
+                  style={{ background: t.dividerMed }}
                 />
                 <div
                   className="h-3 w-3 rotate-45"
-                  style={{ background: DARK + "60" }}
+                  style={{ background: t.dividerDark }}
                 />
                 <div
                   className="h-0.5 flex-1"
-                  style={{ background: DARK + "30" }}
+                  style={{ background: t.dividerMed }}
                 />
               </div>
               <div className="flex items-center justify-between">
                 <h2
                   className="text-lg font-black uppercase tracking-wider"
-                  style={{ color: DARK + "80" }}
+                  style={{ color: t.textSemi }}
                 >
                   Custom Sections
                 </h2>
@@ -1285,8 +1329,8 @@ export default function ResumeBuilder() {
                   onClick={() =>
                     dispatch({ type: "ADD_CUSTOM_SECTION" })
                   }
-                  className="rounded-sm border-2 px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition hover:bg-black/5"
-                  style={{ borderColor: DARK + "30", color: DARK }}
+                  className="rounded-sm border-2 px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition hover:bg-black/5 dark:hover:bg-white/5"
+                  style={{ borderColor: t.dividerMed, color: t.fg }}
                 >
                   + Add Section
                 </button>
@@ -1296,7 +1340,7 @@ export default function ResumeBuilder() {
                 <div
                   key={section.id}
                   className="mt-3 border-l-4 pl-4"
-                  style={{ borderColor: DARK + "40" }}
+                  style={{ borderColor: t.customBorder }}
                 >
                   <div className="flex items-center gap-2">
                     <input
@@ -1312,8 +1356,8 @@ export default function ResumeBuilder() {
                       placeholder="Section title..."
                       className="flex-1 border-b bg-transparent text-sm font-bold uppercase tracking-wider outline-none transition focus:border-[#E63946]"
                       style={{
-                        borderColor: "#ddd",
-                        color: DARK,
+                        borderColor: t.border,
+                        color: t.fg,
                       }}
                     />
                     <button
@@ -1343,8 +1387,8 @@ export default function ResumeBuilder() {
                     rows={3}
                     className="mt-2 w-full resize-none border bg-transparent px-2 py-1.5 text-[11px] outline-none transition focus:border-[#E63946]"
                     style={{
-                      borderColor: "#eee",
-                      color: DARK,
+                      borderColor: t.borderLight,
+                      color: t.fg,
                     }}
                   />
                 </div>
@@ -1353,7 +1397,7 @@ export default function ResumeBuilder() {
               {state.customSections.length === 0 && (
                 <p
                   className="mt-2 text-[10px]"
-                  style={{ color: "#999" }}
+                  style={{ color: t.muted }}
                 >
                   No custom sections added yet.
                 </p>
@@ -1368,7 +1412,7 @@ export default function ResumeBuilder() {
         {/* ── Right: sticky preview ── */}
         <div
           className="hidden w-[420px] shrink-0 flex-col overflow-hidden border-l-2 p-5 lg:flex"
-          style={{ borderColor: DARK, background: "#f8f6f0" }}
+          style={{ borderColor: isDark ? t.border : DARK, background: t.previewBg }}
         >
           <div className="mb-3 flex w-full items-center gap-1">
             <div
@@ -1385,12 +1429,12 @@ export default function ResumeBuilder() {
             />
             <div
               className="h-1.5 flex-1"
-              style={{ background: DARK }}
+              style={{ background: isDark ? "#7B9FC4" : DARK }}
             />
             <button
               onClick={() => setFullscreenPreview(true)}
-              className="ml-2 shrink-0 rounded-sm border px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider transition hover:bg-black/5"
-              style={{ borderColor: "#ddd", color: "#999" }}
+              className="ml-2 shrink-0 rounded-sm border px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider transition hover:bg-black/5 dark:hover:bg-white/5"
+              style={{ borderColor: t.border, color: t.muted }}
               title="Fullscreen preview"
             >
               &#x26F6;
@@ -1399,8 +1443,10 @@ export default function ResumeBuilder() {
           <div
             className="min-h-0 flex-1"
             style={{
-              boxShadow: `6px 6px 0px ${DARK}`,
-              border: `2px solid ${DARK}`,
+              boxShadow: isDark
+                ? "0 0 30px rgba(255,255,255,0.03)"
+                : `6px 6px 0px ${DARK}`,
+              border: `2px solid ${isDark ? t.border : DARK}`,
             }}
           >
             <PDFViewer width="100%" height="100%" showToolbar={false}>
@@ -1429,7 +1475,7 @@ function Row({
   return (
     <button
       onClick={onToggle}
-      className="flex w-full items-center gap-2 rounded py-1.5 pl-1 pr-2 text-left text-xs transition hover:bg-black/5"
+      className="flex w-full items-center gap-2 rounded py-1.5 pl-1 pr-2 text-left text-xs transition hover:bg-black/5 dark:hover:bg-white/5"
       style={{ opacity: enabled ? 1 : 0.4 }}
     >
       <span

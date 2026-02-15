@@ -22,23 +22,31 @@ export async function POST(req: Request) {
 
     const { stream, handlers } = LangChainStream();
 
-    // store the same user questions
-    const cache = new UpstashRedisCache({
-      client: Redis.fromEnv(),
-    });
+    // Try to set up Redis cache — skip if env vars are missing or Redis is unreachable
+    let cache: UpstashRedisCache | undefined;
+    if (
+      process.env.UPSTASH_REDIS_REST_URL &&
+      process.env.UPSTASH_REDIS_REST_TOKEN
+    ) {
+      try {
+        cache = new UpstashRedisCache({ client: Redis.fromEnv() });
+      } catch {
+        console.warn("Redis cache init failed, proceeding without cache");
+      }
+    }
 
     const chatModel = new ChatOpenAI({
       model: "gpt-4o-mini",
       streaming: true,
       callbacks: [handlers],
       verbose: true, // logs to console
-      cache,
+      ...(cache && { cache }),
     });
 
     const rephraseModel = new ChatOpenAI({
       model: "gpt-4o-mini",
       verbose: true,
-      cache,
+      ...(cache && { cache }),
     });
 
     // Use the new OpenAI Vector Store retriever
