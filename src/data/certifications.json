@@ -1,0 +1,19 @@
+{
+  "certifications": [
+    {
+      "name": "Privacy and Security in Online Social Media",
+      "issuer": "NPTEL",
+      "date": "Apr '24"
+    },
+    {
+      "name": "AI and ML",
+      "issuer": "Google Developers & SmartInternz",
+      "date": "Nov '23"
+    },
+    {
+      "name": "Applied Machine Learning in Python",
+      "issuer": "University of Michigan",
+      "date": "Feb '23"
+    }
+  ]
+}

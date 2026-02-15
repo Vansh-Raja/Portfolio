@@ -73,3 +73,13 @@ export const technologiesSchema = z.object({ technologies });
 export type PrimarySkill = z.infer<typeof primarySkill>;
 export type AdditionalCategory = z.infer<typeof additionalCategory>;
 export type Technologies = z.infer<typeof technologies>;
+
+const certification = z.object({
+  name: z.string(),
+  issuer: z.string(),
+  date: z.string(),
+});
+export const certificationsSchema = z.object({
+  certifications: z.array(certification),
+});
+export type Certification = z.infer<typeof certification>;

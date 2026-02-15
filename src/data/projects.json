@@ -1,6 +1,32 @@
 {
   "projects": [
     {
+      "name": "Vaani",
+      "description": "Real-time multilingual conversational AI agent built for Virtual Galaxy. Supports voice calls in Hindi, English, and Marathi with seamless mid-conversation language switching. Built on LiveKit Agents with custom Sarvam AI STT/TTS patches and a modular language pack architecture.",
+      "image": "/projects/vaani/web-ui.png",
+      "tags": [
+        "Python",
+        "LiveKit",
+        "Sarvam AI",
+        "Gemini",
+        "FastAPI",
+        "React",
+        "Vite",
+        "Bun",
+        "WebRTC"
+      ],
+      "links": [
+        {
+          "name": "Source",
+          "href": "https://github.com/Vansh-Raja/ConversationalAI_VG",
+          "icon": "github"
+        }
+      ],
+      "duration": "Jan '26 – Present",
+      "team": "Solo",
+      "blogSlug": "vaani"
+    },
+    {
       "name": "SSHThing",
       "description": "A TUI SSH manager built with Go and Bubble Tea. Save, organize, and connect to SSH hosts securely—all from the terminal. Features encrypted storage (SQLCipher + AES-GCM), spotlight search, multi-device sync via GitHub, and macOS Finder mounts.",
       "image": "/projects/sshthing/main-view.png",
@@ -93,9 +119,9 @@
     },
     {
       "name": "BudgetThing",
-      "description": "A minimal expense tracker for iPhone. Built with Swift and SwiftUI. One-screen workflow: type the amount, pick an emoji category, done. Fully offline, no sign-ups required.",
+      "description": "An expense tracker and Splitwise-style trip splitter for iPhone. Built with Expo (React Native), Convex backend, and Clerk auth. Offline-first with real-time multi-device sync.",
       "image": "/projects/budgetthing/HomeScreen.jpeg",
-      "tags": ["Swift", "SwiftUI", "iOS"],
+      "tags": ["Expo", "React Native", "Convex", "Clerk", "SQLite", "TypeScript"],
       "links": [
         {
           "name": "Source",
@@ -103,7 +129,7 @@
           "icon": "github"
         }
       ],
-      "duration": "Jan '26",
+      "duration": "Jan '26 — Present",
       "team": "Solo",
       "blogSlug": "budgetthing"
     },

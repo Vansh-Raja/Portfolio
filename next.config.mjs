@@ -6,6 +6,7 @@ const nextConfig = {
       'api.lorem.space',
     ],
   },
+  transpilePackages: ['@react-pdf/renderer'],
 };
 
 export default nextConfig;
