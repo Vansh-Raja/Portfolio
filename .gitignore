@@ -42,3 +42,5 @@ next-env.d.ts
 
 # Local manifest (Vercel uses .vercel/cache)
 .vector-store-manifest.json
+
+.claude/
