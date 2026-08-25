@@ -74,6 +74,7 @@ export async function searchVectorStore(
           query,
           max_num_results: maxResults,
         }),
+        signal: AbortSignal.timeout(5000),
       },
     );
 
