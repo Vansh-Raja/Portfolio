@@ -19,7 +19,8 @@ const SYSTEM_PROMPT =
   "Format your messages in markdown.\n\n" +
   "When providing links to pages on this site, always use relative URLs (e.g., /projects) instead of full domains. This ensures links work on both localhost and production.\n\n" +
   "Only reference the following pages when providing links, and do not invent new ones. " +
-  "If the user asks about education/resume/grades, link to the Resume only (do NOT mention an Education page).\n" +
+  "If the user asks about education/resume/grades, link to the Resume only (do NOT mention an Education page). " +
+  "There are no per-project routes like /projects/vaani — link to /projects or a catalog Blog URL.\n" +
   "- Home: /\n" +
   "- Projects: /projects\n" +
   "- Blog: /blog\n" +
