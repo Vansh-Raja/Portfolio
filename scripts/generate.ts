@@ -356,6 +356,37 @@ function generateSummaries(): ContentDocument[] {
     console.error("Failed to generate technologies summary:", e);
   }
 
+  // Projects summary
+  try {
+    const projectsPath = path.join(DATA_DIR, "projects.json");
+    if (fs.existsSync(projectsPath)) {
+      const projectsData = JSON.parse(fs.readFileSync(projectsPath, "utf8"));
+      let summary = "Vansh's Projects (complete catalog):\n\n";
+
+      for (const project of projectsData.projects || []) {
+        summary += `- ${project.name}`;
+        if (project.duration) summary += ` (${project.duration})`;
+        summary += `: ${project.description}\n`;
+        if (project.tags?.length) {
+          summary += `  Tech: ${project.tags.join(", ")}\n`;
+        }
+        if (project.blogSlug) {
+          summary += `  Blog: /blog/${project.blogSlug}\n`;
+        }
+      }
+
+      documents.push({
+        sourceId: "summary:projects",
+        content: `URL: /projects\nType: Projects Summary\n\n${summary}`,
+        url: "/projects",
+        kind: "summary",
+        filename: "projects-summary.txt",
+      });
+    }
+  } catch (e) {
+    console.error("Failed to generate projects summary:", e);
+  }
+
   // Site pages summary
   try {
     const sitePagesPath = path.join(DATA_DIR, "site-pages.json");

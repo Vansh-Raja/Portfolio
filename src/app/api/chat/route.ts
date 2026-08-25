@@ -1,3 +1,4 @@
+import { buildPortfolioCatalog } from "@/lib/portfolio-catalog";
 import { searchVectorStore } from "@/lib/vectordb";
 import { Message, OpenAIStream, StreamingTextResponse } from "ai";
 import OpenAI from "openai";
@@ -9,8 +10,12 @@ const MODEL = "gpt-5-nano";
 const SYSTEM_PROMPT =
   "You are Vansh Support, a friendly chatbot for Vansh's personal developer portfolio website. " +
   "You are trying to convince potential employers to hire Vansh as a software developer. " +
-  "Be concise and only answer the user's questions based on the provided context below. " +
-  "Provide links to pages that contains relevant information about the topic from the given context. " +
+  "Answer only from the provided context. " +
+  "The Portfolio catalog is complete and authoritative. " +
+  "When asked what projects Vansh has worked on, list EVERY project in the catalog as short bullets " +
+  "(name + one-line description). Do not stop after the first project. " +
+  "Use Extra retrieved notes only for extra detail on a specific project. " +
+  "Provide links to pages that contain relevant information. " +
   "Format your messages in markdown.\n\n" +
   "When providing links to pages on this site, always use relative URLs (e.g., /projects) instead of full domains. This ensures links work on both localhost and production.\n\n" +
   "Only reference the following pages when providing links, and do not invent new ones. " +
@@ -20,8 +25,7 @@ const SYSTEM_PROMPT =
   "- Blog: /blog\n" +
   "- Contact: /contact\n" +
   "- Privacy Policy: /privacy\n" +
-  "- Resume: /VanshRaja_Resume.pdf\n\n" +
-  "Context:\n";
+  "- Resume: /VanshRaja_Resume.pdf\n\n";
 
 function messageText(message: Message): string {
   return typeof message.content === "string" ? message.content : "";
@@ -55,10 +59,19 @@ export async function POST(req: Request) {
     const searchQuery = [...priorUserText, latestMessage].join(" ");
 
     const results = await searchVectorStore(searchQuery, 5);
-    const context = results
-      .map((result) => result.content)
+    const extras = results
+      .map((result) => {
+        const label = result.filename ? `[${result.filename}] ` : "";
+        return `${label}${result.content}`;
+      })
       .filter(Boolean)
       .join("\n------\n");
+    const context = [
+      buildPortfolioCatalog(),
+      extras ? `Extra retrieved notes:\n${extras}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n\n");
 
     const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     // gpt-5-nano defaults to heavy hidden reasoning (can exceed 60s and Vercel timeouts).
@@ -67,7 +80,7 @@ export async function POST(req: Request) {
       stream: true,
       reasoning_effort: "minimal",
       messages: [
-        { role: "system", content: `${SYSTEM_PROMPT}${context}` },
+        { role: "system", content: `${SYSTEM_PROMPT}Context:\n${context}` },
         ...messages.map((msg) => ({
           role: msg.role as "user" | "assistant" | "system",
           content: messageText(msg),

@@ -72,7 +72,8 @@ export async function searchVectorStore(
         },
         body: JSON.stringify({
           query,
-          max_num_results: maxResults,
+          max_num_results: Math.max(maxResults * 3, 12),
+          rewrite_query: true,
         }),
         signal: AbortSignal.timeout(5000),
       },
@@ -88,9 +89,15 @@ export async function searchVectorStore(
 
     const data: VectorStoreSearchResponse = await response.json();
     const results: SearchResult[] = [];
+    const seen = new Set<string>();
 
     for (const result of data.data) {
-      // Extract text content from the result
+      const dedupeKey = result.filename || result.file_id;
+      if (seen.has(dedupeKey)) {
+        continue;
+      }
+      seen.add(dedupeKey);
+
       let content = "";
       if (result.content && Array.isArray(result.content)) {
         for (const contentPart of result.content) {
@@ -100,12 +107,21 @@ export async function searchVectorStore(
         }
       }
 
+      const trimmed = content.trim();
+      if (!trimmed) {
+        continue;
+      }
+
       results.push({
         fileId: result.file_id,
         filename: result.filename,
         score: result.score,
-        content: content.trim(),
+        content: trimmed.length > 1600 ? `${trimmed.slice(0, 1600)}…` : trimmed,
       });
+
+      if (results.length >= maxResults) {
+        break;
+      }
     }
 
     return results;
