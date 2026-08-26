@@ -1,9 +1,27 @@
 {
   "projects": [
     {
+      "name": "KRCL Manual RAG",
+      "description": "Live POC for Konkan Railway. Indexes 20 railway manuals (~6,500 pages) into a citation-first RAG chatbot so operating and engineering staff can look up rules, paras, and forms without flipping PDFs. Hybrid search with page-level citations.",
+      "image": "/projects/covers/krcl-manual-rag.jpg",
+      "tags": ["Python", "FastAPI", "PostgreSQL", "PGVector", "RAG", "React"],
+      "links": [],
+      "duration": "Jun '26 – Aug '26",
+      "team": "Solo"
+    },
+    {
+      "name": "HMS JJH",
+      "description": "Live POC for Sir J.J. Hospital, Byculla. Radiology asset management (inventory, AMC/warranty, service alerts) and a neurology MRI appointment system for OPD and IPD — kiosk, desk, and queue display instead of paper registers.",
+      "image": "/projects/covers/hms-jjh.jpg",
+      "tags": ["Next.js", "TypeScript", "PostgreSQL", "React", "Docker"],
+      "links": [],
+      "duration": "Jun '26 – Aug '26",
+      "team": "Solo"
+    },
+    {
       "name": "Vaani",
-      "description": "Real-time multilingual conversational AI agent built for Virtual Galaxy. Supports voice calls in Hindi, English, and Marathi with seamless mid-conversation language switching. Built on LiveKit Agents with custom Sarvam AI STT/TTS patches and a modular language pack architecture.",
-      "image": "/projects/vaani/web-ui.png",
+      "description": "Real-time multilingual voice agent for Virtual Galaxy. Speaks Hindi, English, Marathi, Gujarati, Malayalam, Bengali, and Odia, and can switch language mid-call. Production phone calling (SIP), visual agent builder, and a multi-tenant admin UI, on LiveKit with custom Sarvam STT/TTS and Gemini.",
+      "image": "/projects/covers/vaani.jpg",
       "tags": [
         "Python",
         "LiveKit",
@@ -11,25 +29,18 @@
         "Gemini",
         "FastAPI",
         "React",
-        "Vite",
-        "Bun",
-        "WebRTC"
+        "SIP",
+        "PostgreSQL"
       ],
-      "links": [
-        {
-          "name": "Source",
-          "href": "https://github.com/Vansh-Raja/ConversationalAI_VG",
-          "icon": "github"
-        }
-      ],
-      "duration": "Jan '26 – Present",
+      "links": [],
+      "duration": "Jan '26 – May '26",
       "team": "Solo",
       "blogSlug": "vaani"
     },
     {
       "name": "BudgetThing",
       "description": "An expense tracker and Splitwise-style trip splitter for iPhone. Built with Expo (React Native), Convex backend, and Clerk auth. Offline-first with real-time multi-device sync.",
-      "image": "/projects/budgetthing/HomeScreen.jpeg",
+      "image": "/projects/covers/budgetthing.jpg",
       "tags": ["Expo", "React Native", "Convex", "Clerk", "SQLite", "TypeScript"],
       "links": [
         {
@@ -45,7 +56,7 @@
     {
       "name": "Legal Drafting System",
       "description": "Multi-Agent RAG system that auto-drafts legal replies from 2,000+ Indian court judgments. Features an AI pipeline with query planning, hybrid search (vector + keyword), and a filtration agent. Supports petition upload for precedent-based rebuttals and an advisory chat interface.",
-      "image": "/projects/lds/main-chat-1.png",
+      "image": "/projects/covers/legal-drafting.jpg",
       "tags": [
         "Python",
         "PostgreSQL",
@@ -71,7 +82,7 @@
     {
       "name": "Data Loss Prevention",
       "description": "Proof-of-concept DLP system with cross-platform agents (Windows/Linux) that monitor files, clipboard, and USB devices. Detects sensitive data like Aadhaar numbers, API keys, and passwords. Features a React dashboard for live events, agent status, and policy management. Includes Google Drive integration.",
-      "image": "/projects/dlp/dashboard.jpeg",
+      "image": "/projects/covers/dlp.jpg",
       "tags": [
         "Python",
         "FastAPI",
@@ -97,7 +108,7 @@
     {
       "name": "SSHThing",
       "description": "A TUI SSH manager built with Go and Bubble Tea. Save, organize, and connect to SSH hosts securely—all from the terminal. Features encrypted storage (SQLCipher + AES-GCM), spotlight search, multi-device sync via GitHub, and macOS Finder mounts.",
-      "image": "/projects/sshthing/main-view.png",
+      "image": "/projects/covers/sshthing.jpg",
       "tags": ["Go", "Bubble Tea", "SQLCipher", "AES-GCM", "TUI", "macOS"],
       "links": [
         {
@@ -113,7 +124,7 @@
     {
       "name": "Sunshine Bot",
       "description": "Built in one week: a voice-first hospital booking bot you could call on a real phone number. Used ElevenLabs + Twilio for voice, a Flask API for booking logic, and Google Calendar as the admin interface with SQLite sync for fast conflict checks. Supports patient lookup, booking, rescheduling, cancellations, and availability queries.",
-      "image": "/projects/sunshinebot/sunshinebot.png",
+      "image": "/projects/covers/sunshinebot.jpg",
       "tags": [
         "Python",
         "Flask",
@@ -136,7 +147,7 @@
     {
       "name": "Food Demand Forecasting",
       "description": "Time-series pipeline to forecast food demand and cut waste. Built end-to-end MLOps with Kafka + PySpark for ingestion, DVC/MLflow for experiment tracking, and a Flask service to surface forecasts that improve inventory planning.",
-      "image": "/projects/food-demand.png",
+      "image": "/projects/covers/food-demand.jpg",
       "tags": [
         "Kafka",
         "PySpark",
@@ -160,6 +171,7 @@
     {
       "name": "Calpred",
       "description": "Calorie-burn predictor from workout data with a web UI for real-time tracking and visual feedback. Trained with XGBoost/TPOT and packaged behind Flask with lightweight storage to keep users on top of their fitness goals.",
+      "image": "/projects/covers/calpred.jpg",
       "tags": [
         "Flask",
         "SQLite",
@@ -184,7 +196,7 @@
     {
       "name": "CozyReader",
       "description": "AI bedtime storyteller that crafts personalized audio tales with custom characters, themes, and voices. Streamlit front-end with HuggingFace TTS voices and Google GenAI to keep bedtime engaging.",
-      "image": "/projects/cozy-reader.png",
+      "image": "/projects/covers/cozyreader.jpg",
       "tags": [
         "Google Generative AI API",
         "HuggingFace TTS",

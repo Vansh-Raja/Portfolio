@@ -7,7 +7,10 @@
       "logo": "/logos/vgil.png",
       "start": "Feb '26",
       "description": [
-        "Building Vaani, a real-time multilingual conversational AI agent with per-turn language switching across Hindi, English, and Marathi. Custom Sarvam AI STT/TTS patches on LiveKit with a modular language pack architecture."
+        "Lead developer of Vaani, VGIL's multilingual voice agent: Hindi, English, Marathi, Gujarati, Malayalam, Bengali, and Odia, with mid-call language switching, production phone calling (inbound and outbound SIP), a visual agent builder, and a multi-tenant operator dashboard. LiveKit, Sarvam STT/TTS, Gemini.",
+        "Lead developer of a live POC for Konkan Railway: a RAG assistant over 20 operating and engineering manuals (~6,500 pages), so staff can ask in plain language and get answers tied to the exact rule and PDF page.",
+        "Lead developer of a live POC for Sir J.J. Hospital, Byculla: radiology asset register with AMC and warranty tracking, plus a neurology MRI appointment desk that replaces paper day-sheets for OPD and IPD.",
+        "Also worked with VGIL's infrastructure division on business development with other clients."
       ],
       "technologies": [
         "LiveKit",
@@ -16,9 +19,11 @@
         "Python",
         "FastAPI",
         "React",
-        "WebRTC",
-        "Vite",
-        "Bun"
+        "SIP",
+        "PostgreSQL",
+        "PGVector",
+        "Next.js",
+        "Docker"
       ]
     },
     {

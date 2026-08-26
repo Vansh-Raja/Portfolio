@@ -53,6 +53,7 @@
           "Plotly",
           "LLM APIs (Groq, OpenAI, Google AI)",
           "LiveKit",
+          "SIP",
           "RAG",
           "Prompt Engineering"
         ]
@@ -77,6 +78,7 @@
           "Kafka",
           "SQL",
           "PostgreSQL",
+          "PGVector",
           "Cassandra",
           "MongoDB",
           "Redis",
