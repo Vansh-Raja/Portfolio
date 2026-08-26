@@ -877,7 +877,14 @@ export default function ResumeBuilder() {
                                                   : "line-through",
                                             }}
                                           >
-                                            {b}
+                                            {b.split(/(\*\*[^*]+\*\*)/g).map((part, k) => {
+                                              const bold = part.match(/^\*\*([^*]+)\*\*$/);
+                                              return bold ? (
+                                                <strong key={k}>{bold[1]}</strong>
+                                              ) : (
+                                                <span key={k}>{part}</span>
+                                              );
+                                            })}
                                           </span>
                                         </button>
                                       ))}

@@ -1,5 +1,6 @@
 import { Experience } from "@/lib/schemas";
 import Link from "next/link";
+import Markdown from "react-markdown";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar";
 import { Badge } from "./ui/Badge";
 import Icon from "./Icon";
@@ -51,7 +52,13 @@ export default function TimelineItem({ experience }: Props) {
           <ul className="ml-4 list-outside list-disc">
             {description.map((desc, i) => (
               <li key={i} className="prose pr-8 text-sm dark:prose-invert">
-                {desc}
+                <Markdown
+                  components={{
+                    p: ({ children }) => <>{children}</>,
+                  }}
+                >
+                  {desc}
+                </Markdown>
               </li>
             ))}
           </ul>

@@ -181,11 +181,28 @@ const s = StyleSheet.create({
   },
 });
 
+function inlineMarkdown(text: string) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    const bold = part.match(/^\*\*([^*]+)\*\*$/);
+    if (bold) {
+      return (
+        <Text key={i} style={{ fontWeight: "bold" }}>
+          {bold[1]}
+        </Text>
+      );
+    }
+    return <Text key={i}>{part}</Text>;
+  });
+}
+
 function Bullet({ children }: { children: React.ReactNode }) {
   return (
     <View style={s.bulletRow}>
       <Text style={s.bulletDot}>{"\u2022"}</Text>
-      <Text style={s.bulletText}>{children}</Text>
+      <Text style={s.bulletText}>
+        {typeof children === "string" ? inlineMarkdown(children) : children}
+      </Text>
     </View>
   );
 }

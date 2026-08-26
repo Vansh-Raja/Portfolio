@@ -47,7 +47,7 @@ export function buildPortfolioCatalog(): string {
     .map((job) => {
       const dates = job.end ? `${job.start} - ${job.end}` : `${job.start} - Present`;
       const bullets = (job.description ?? [])
-        .map((line) => `  - ${line}`)
+        .map((line) => `  - ${line.replace(/\*\*/g, "")}`)
         .join("\n");
       return `- ${job.title} at ${job.name} (${dates})\n${bullets}`;
     })
