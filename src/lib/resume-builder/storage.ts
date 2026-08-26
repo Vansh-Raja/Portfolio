@@ -1,7 +1,7 @@
 import type { ResumeFormState } from "./types";
 
 const STORAGE_KEY = "resume-builder-state";
-const STORAGE_VERSION = 3;
+const STORAGE_VERSION = 4;
 
 interface StoredState {
   version: number;

@@ -20,7 +20,10 @@ import type {
   ResumeAction,
   SectionToggles,
 } from "@/lib/resume-builder/types";
-import { createDefaultState } from "@/lib/resume-builder/defaults";
+import {
+  createDefaultState,
+  alignResumeState,
+} from "@/lib/resume-builder/defaults";
 import {
   saveState,
   loadState,
@@ -125,16 +128,21 @@ function reducer(
     case "TOGGLE_EXPERIENCE_BULLET":
       return {
         ...state,
-        experience: state.experience.map((e, i) =>
-          i === action.entryIndex
-            ? {
-                ...e,
-                enabledBullets: e.enabledBullets.map((b, j) =>
-                  j === action.bulletIndex ? !b : b,
-                ),
-              }
-            : e,
-        ),
+        experience: state.experience.map((e, i) => {
+          if (i !== action.entryIndex) return e;
+          const needed = Math.max(
+            e.enabledBullets.length,
+            action.bulletIndex + 1,
+            (careerData.career[e.dataIndex]?.description ?? []).length,
+          );
+          const enabledBullets = Array.from(
+            { length: needed },
+            (_, j) => e.enabledBullets[j] ?? true,
+          );
+          enabledBullets[action.bulletIndex] =
+            !enabledBullets[action.bulletIndex];
+          return { ...e, enabledBullets };
+        }),
       };
     case "ADD_CUSTOM_BULLET":
       return {
@@ -273,7 +281,7 @@ function reducer(
 export default function ResumeBuilder() {
   const [state, dispatch] = useReducer(reducer, null, () => {
     const saved = loadState();
-    return saved ?? createDefaultState();
+    return saved ? alignResumeState(saved) : createDefaultState();
   });
 
   const [expanded, setExpanded] = useState<Set<string>>(
