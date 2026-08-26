@@ -6,7 +6,7 @@
       "title": "Security Analyst",
       "logo": "/logos/vgil.png",
       "start": "Feb '26",
-      "location": "Mumbai, India (Remote)",
+      "location": "Nagpur, India",
       "description": [
         "Built Vaani, VGIL's multilingual voice agent (**lead developer**): seven Indian languages (Hindi, English, Marathi, Gujarati, Malayalam, Bengali, Odia) with mid-call switching, real inbound and outbound phone calls (SIP), and a dashboard so tenants can design and run their own agents instead of waiting on engineering (LiveKit, Sarvam STT/TTS, Gemini).",
         "Built a live RAG POC for Konkan Railway (**lead developer**): 20 operating and engineering manuals (~6,500 pages), so staff can ask in plain language and get the rule plus the exact PDF page, instead of hunting through the books.",

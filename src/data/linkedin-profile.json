@@ -14,8 +14,8 @@
         "employmentType": "Full-time",
         "start": "2026-02",
         "end": null,
-        "location": "Mumbai, Maharashtra, India",
-        "workplaceType": "Remote",
+        "location": "Nagpur, India",
+        "workplaceType": "On-site",
         "description": "Lead developer for Vaani, a multilingual voice-agent platform supporting seven Indian languages, mid-call switching, production SIP calls and tenant-managed agent configuration. Led a citation-first RAG POC for Konkan Railway across 20 manuals and approximately 6,500 pages. Delivered live POCs for Sir J.J. Hospital covering radiology asset management and MRI appointment workflows. Also supported infrastructure-led business development with other clients.",
         "source": "src/data/career.json#career[0]"
       },
