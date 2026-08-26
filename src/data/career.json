@@ -6,6 +6,7 @@
       "title": "Security Analyst",
       "logo": "/logos/vgil.png",
       "start": "Feb '26",
+      "location": "Mumbai, India (Remote)",
       "description": [
         "Built Vaani, VGIL's multilingual voice agent (**lead developer**): seven Indian languages (Hindi, English, Marathi, Gujarati, Malayalam, Bengali, Odia) with mid-call switching, real inbound and outbound phone calls (SIP), and a dashboard so tenants can design and run their own agents instead of waiting on engineering (LiveKit, Sarvam STT/TTS, Gemini).",
         "Built a live RAG POC for Konkan Railway (**lead developer**): 20 operating and engineering manuals (~6,500 pages), so staff can ask in plain language and get the rule plus the exact PDF page, instead of hunting through the books.",
@@ -33,6 +34,7 @@
       "logo": "/logos/vgil.png",
       "start": "Oct '25",
       "end": "Jan '26",
+      "location": "Mumbai, India (Remote)",
       "description": [
         "Built a RAG legal drafting system: ingested 5,000+ judgments into PGVector, ran PDF → metadata → chunking → embeddings, and served hybrid retrieval (vector + PostgreSQL FTS) with petition-aware drafting via Streamlit.",
         "Developed Windows/Linux DLP agents to monitor directories, clipboard, and PII; forwarded events in real time to a FastAPI backend with PostgreSQL, Redis, and OpenSearch for incident logging and policy actions."
@@ -60,6 +62,7 @@
       "logo": "/logos/preprodcorp.jpeg",
       "start": "Nov ‘23",
       "end": "Jan ‘25",
+      "location": "Bengaluru, India (Remote)",
       "technologies": [
         "Kafka",
         "DVC",

@@ -548,7 +548,7 @@ export default function ResumeBuilder() {
               }}
             />
             <div className="mt-3 flex flex-wrap gap-4">
-              {(["email", "phone", "website"] as const).map((f) => (
+              {(["email", "phone", "website", "linkedin"] as const).map((f) => (
                 <label key={f} className="flex items-center gap-2">
                   <span
                     className={`text-[9px] font-bold uppercase ${spaceMono.className}`}

@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import {
   Document,
   Page,
@@ -9,14 +10,19 @@ import {
   Font,
   Link,
 } from "@react-pdf/renderer";
-import type { ResumeFormState, SectionToggles } from "@/lib/resume-builder/types";
+import type {
+  ResumeFormState,
+  SectionToggles,
+} from "@/lib/resume-builder/types";
 import careerData from "@/data/career.json";
 import educationData from "@/data/education.json";
 import projectsData from "@/data/projects.json";
 import certificationsData from "@/data/certifications.json";
 
 const fontBase =
-  typeof window !== "undefined" ? window.location.origin : "";
+  typeof window !== "undefined"
+    ? window.location.origin
+    : (process.env.RESUME_FONT_BASE ?? "");
 
 const fontFamilies = [
   { family: "EBGaramond", prefix: "EBGaramond" },
@@ -63,12 +69,12 @@ const s = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginBottom: 8,
-    fontSize: 10.5,
+    fontSize: 9.5,
   },
   contactLink: {
     color: "#000000",
     textDecoration: "underline",
-    fontSize: 10.5,
+    fontSize: 9.5,
   },
   sectionTitle: {
     fontSize: 12,
@@ -212,7 +218,15 @@ interface Props {
 }
 
 export default function ResumePdfDocument({ state }: Props) {
-  const sectionOrder = state.sectionOrder ?? ["education", "experience", "projects", "certifications", "skills"] as (keyof SectionToggles)[];
+  const sectionOrder =
+    state.sectionOrder ??
+    ([
+      "education",
+      "experience",
+      "projects",
+      "certifications",
+      "skills",
+    ] as (keyof SectionToggles)[]);
   const expOrder = state.experienceOrder ?? state.experience.map((_, i) => i);
   const projOrder = state.projectOrder ?? state.projects.map((_, i) => i);
 
@@ -228,7 +242,9 @@ export default function ResumePdfDocument({ state }: Props) {
             if (!data) return null;
             const desc = data.description ?? [];
             const grade = desc.find(
-              (d) => d.toLowerCase().startsWith("grade") || d.toLowerCase().startsWith("aggregate"),
+              (d) =>
+                d.toLowerCase().startsWith("grade") ||
+                d.toLowerCase().startsWith("aggregate"),
             );
             return (
               <View key={entry.dataIndex} style={{ marginBottom: 2 }}>
@@ -237,7 +253,8 @@ export default function ResumePdfDocument({ state }: Props) {
                   <Text>{data.name};</Text>
                 </Text>
                 <Text style={{ fontSize: 10.5 }}>
-                  {grade ? `${grade}; ` : ""}{data.end ?? ""}
+                  {grade ? `${grade}; ` : ""}
+                  {data.end ?? ""}
                 </Text>
               </View>
             );
@@ -247,11 +264,13 @@ export default function ResumePdfDocument({ state }: Props) {
     },
 
     experience: () => {
-      const orderedEnabled = expOrder.filter((i) => state.experience[i]?.enabled);
+      const orderedEnabled = expOrder.filter(
+        (i) => state.experience[i]?.enabled,
+      );
       if (orderedEnabled.length === 0) return null;
       return (
         <View>
-          <Text style={s.sectionTitle}>Internships</Text>
+          <Text style={s.sectionTitle}>Experience</Text>
           {orderedEnabled.map((entryIdx) => {
             const entry = state.experience[entryIdx];
             const data = careerData.career[entry.dataIndex];
@@ -262,13 +281,16 @@ export default function ResumePdfDocument({ state }: Props) {
             );
             const allBullets = [...enabledBullets, ...entry.customBullets];
             return (
-              <View key={entryIdx}>
+              <View key={entryIdx} wrap={false}>
                 <View style={s.entryRow}>
                   <Text style={s.entryTitle}>
-                    {data.title}, {data.name}, Nagpur
+                    {data.title}, {data.name}
                   </Text>
                   <Text style={s.entryDate}>{dateRange}</Text>
                 </View>
+                {data.location && (
+                  <Text style={s.entrySubtitle}>{data.location}</Text>
+                )}
                 {allBullets.map((bullet, i) => (
                   <Bullet key={i}>{bullet}</Bullet>
                 ))}
@@ -286,7 +308,9 @@ export default function ResumePdfDocument({ state }: Props) {
     },
 
     projects: () => {
-      const orderedEnabled = projOrder.filter((i) => state.projects[i]?.enabled);
+      const orderedEnabled = projOrder.filter(
+        (i) => state.projects[i]?.enabled,
+      );
       if (orderedEnabled.length === 0) return null;
       return (
         <View>
@@ -298,9 +322,15 @@ export default function ResumePdfDocument({ state }: Props) {
             const ghLink = data.links.find((l) => l.icon === "github")?.href;
             const description = entry.descriptionOverride ?? data.description;
             return (
-              <View key={entryIdx}>
+              <View key={entryIdx} wrap={false}>
                 <View style={s.projectTitleRow}>
-                  <View style={{ flexDirection: "row", alignItems: "flex-end", flex: 1 }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "flex-end",
+                      flex: 1,
+                    }}
+                  >
                     <Text style={s.projectName}>{data.name} </Text>
                     {entry.showLink && ghLink && (
                       <Link src={ghLink} style={s.projectLink}>
@@ -339,7 +369,9 @@ export default function ResumePdfDocument({ state }: Props) {
               <View key={entry.dataIndex} style={s.certBullet}>
                 <Text style={s.bulletDot}>{"\u2022"}</Text>
                 <Text style={s.bulletText}>
-                  {"\u201C"}{data.name}{"\u201D"} by {data.issuer}, {data.date}
+                  {"\u201C"}
+                  {data.name}
+                  {"\u201D"} by {data.issuer}, {data.date}
                 </Text>
               </View>
             );
@@ -351,16 +383,20 @@ export default function ResumePdfDocument({ state }: Props) {
     skills: () => {
       const enabled = state.skills.filter((e) => e.enabled);
       if (enabled.length === 0) return null;
-      const rows = enabled.map((cat, i) => {
-        const enabledItems = cat.items.filter((item) => item.enabled).map((item) => item.name);
-        if (enabledItems.length === 0) return null;
-        return (
-          <View key={i} style={s.skillRow}>
-            <Text style={s.skillLabel}>{cat.label}: </Text>
-            <Text style={s.skillItems}>{enabledItems.join(", ")}</Text>
-          </View>
-        );
-      }).filter(Boolean);
+      const rows = enabled
+        .map((cat, i) => {
+          const enabledItems = cat.items
+            .filter((item) => item.enabled)
+            .map((item) => item.name);
+          if (enabledItems.length === 0) return null;
+          return (
+            <View key={i} style={s.skillRow}>
+              <Text style={s.skillLabel}>{cat.label}: </Text>
+              <Text style={s.skillItems}>{enabledItems.join(", ")}</Text>
+            </View>
+          );
+        })
+        .filter(Boolean);
       if (rows.length === 0) return null;
       return (
         <View>
@@ -377,7 +413,12 @@ export default function ResumePdfDocument({ state }: Props) {
         {/* Header */}
         <Text style={s.headerName}>{state.header.name}</Text>
         <View style={s.headerContactRow}>
-          {[state.header.phone, state.header.email, state.header.website]
+          {[
+            state.header.phone,
+            state.header.email,
+            state.header.website,
+            state.header.linkedin,
+          ]
             .filter(Boolean)
             .map((item, i, arr) => (
               <View key={i} style={{ flexDirection: "row" }}>
@@ -390,10 +431,10 @@ export default function ResumePdfDocument({ state }: Props) {
                     <Text>{item.replace(/^https?:\/\/(www\.)?/, "")}</Text>
                   </Link>
                 ) : (
-                  <Text style={{ fontSize: 10.5 }}>{item}</Text>
+                  <Text style={{ fontSize: 9.5 }}>{item}</Text>
                 )}
                 {i < arr.length - 1 && (
-                  <Text style={{ fontSize: 10.5, paddingHorizontal: 6 }}>|</Text>
+                  <Text style={{ fontSize: 9.5, paddingHorizontal: 4 }}>|</Text>
                 )}
               </View>
             ))}

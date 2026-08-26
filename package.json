@@ -7,6 +7,8 @@
     "build": "npm run gen && next build",
     "build:skip-gen": "next build",
     "gen": "npx ts-node ./scripts/generate.ts",
+    "resume:build": "tsx scripts/generate-resume.tsx",
+    "linkedin:diff": "node scripts/linkedin-diff.mjs",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write ."
@@ -64,6 +66,7 @@
     "prettier-plugin-tailwindcss": "^0.6.6",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
+    "tsx": "^4.20.5",
     "typescript": "^5"
   },
   "resolutions": {

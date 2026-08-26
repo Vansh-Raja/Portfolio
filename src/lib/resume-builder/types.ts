@@ -3,6 +3,7 @@ export interface HeaderState {
   phone: string;
   email: string;
   website: string;
+  linkedin: string;
 }
 
 export interface SectionToggles {

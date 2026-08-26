@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "profileUrl": "https://www.linkedin.com/in/vansh-raja/",
+  "positioning": "AI Systems Engineer",
+  "approvalRequiredBeforeWrite": true,
+  "desired": {
+    "headline": "AI Systems Engineer | Building Voice AI, RAG & Full-Stack Enterprise Products | Security Analyst at Virtual Galaxy Infotech",
+    "about": "I build AI systems that move beyond demos into real operational use. At Virtual Galaxy Infotech, I work across applied AI, product engineering and security, taking ownership from architecture and data pipelines through deployment and user-facing workflows.\n\nAs lead developer for Vaani, I built a multilingual voice-agent platform supporting seven Indian languages, mid-call language switching, real inbound and outbound SIP calls, and a dashboard that lets tenants configure and operate their own agents. I also led a citation-first RAG proof of concept for Konkan Railway across approximately 6,500 pages of operating and engineering manuals, and delivered systems for Sir J.J. Hospital covering radiology asset management and MRI appointment workflows.\n\nEarlier, I built a legal drafting system over 5,000+ judgments, developed Windows and Linux DLP agents, and worked on MLOps and data products at PreProd Corp. I enjoy solving ambiguous operational problems with reliable AI, thoughtful interfaces and infrastructure I can understand end to end.\n\nCurrent interests: production RAG, voice AI, agentic workflows, full-stack AI products, security engineering and self-hosted systems.\n\nPortfolio: https://vanshraja.me",
+    "experience": [
+      {
+        "id": "vgil-security-analyst",
+        "title": "Security Analyst",
+        "company": "Virtual Galaxy Infotech Ltd.",
+        "employmentType": "Full-time",
+        "start": "2026-02",
+        "end": null,
+        "location": "Mumbai, Maharashtra, India",
+        "workplaceType": "Remote",
+        "description": "Lead developer for Vaani, a multilingual voice-agent platform supporting seven Indian languages, mid-call switching, production SIP calls and tenant-managed agent configuration. Led a citation-first RAG POC for Konkan Railway across 20 manuals and approximately 6,500 pages. Delivered live POCs for Sir J.J. Hospital covering radiology asset management and MRI appointment workflows. Also supported infrastructure-led business development with other clients.",
+        "source": "src/data/career.json#career[0]"
+      },
+      {
+        "id": "vgil-security-analyst-intern",
+        "title": "Security Analyst Intern",
+        "company": "Virtual Galaxy Infotech Ltd.",
+        "employmentType": "Internship",
+        "start": "2025-10",
+        "end": "2026-01",
+        "location": "Mumbai, Maharashtra, India",
+        "workplaceType": "Remote",
+        "description": "Built a RAG legal drafting system that ingested 5,000+ judgments into PGVector and combined vector retrieval with PostgreSQL full-text search. Developed Windows and Linux DLP agents for directory, clipboard and PII monitoring, backed by FastAPI, PostgreSQL, Redis and OpenSearch.",
+        "source": "src/data/career.json#career[1]"
+      },
+      {
+        "id": "preprod-data-analyst-intern",
+        "title": "Data Analyst Intern",
+        "company": "PreProd Corp",
+        "employmentType": "Internship",
+        "start": "2023-11",
+        "end": "2025-01",
+        "location": "Bengaluru, Karnataka, India",
+        "workplaceType": "Remote",
+        "description": "Built an end-to-end MLOps pipeline for food-demand forecasting. Delivered PySpark, RAG, GAN, MobileNet, Redis and CouchDB demos; ran a two-day VIT Bhopal buildathon; and led 20 interns across six teams to ship 30+ demos.",
+        "source": "src/data/career.json#career[2]"
+      }
+    ],
+    "education": [
+      {
+        "school": "Vellore Institute of Technology",
+        "degree": "Bachelor of Technology - BTech",
+        "fieldOfStudy": "Computer Science and Engineering, Artificial Intelligence",
+        "start": "2021-09",
+        "end": "2025-08",
+        "grade": "8.89/10",
+        "source": "src/data/education.json#education[0]"
+      }
+    ],
+    "featuredProjects": [
+      "KRCL Manual RAG",
+      "HMS JJH",
+      "Vaani",
+      "Legal Drafting System",
+      "Data Loss Prevention",
+      "SSHThing",
+      "BudgetThing"
+    ],
+    "certifications": [
+      "Privacy and Security in Online Social Media - NPTEL (Apr 2024)",
+      "AI and ML - Google Developers & SmartInternz (Nov 2023)",
+      "Applied Machine Learning in Python - University of Michigan (Feb 2023)"
+    ],
+    "prioritySkills": [
+      "Artificial Intelligence",
+      "Retrieval-Augmented Generation (RAG)",
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "PGVector",
+      "Voice AI",
+      "LiveKit",
+      "React",
+      "Next.js",
+      "Docker",
+      "Security Engineering",
+      "Data Loss Prevention",
+      "Linux",
+      "MLOps"
+    ]
+  },
+  "observed": {
+    "capturedAt": "2026-08-27",
+    "headline": "CSE(AI&ML) | Machine Learning Enthusiast | Python | Natural Language Processing | Content Writer | Ex PW Ambassador 🔗 vanshraja.me",
+    "aboutPresent": false,
+    "experience": [
+      "Security Analyst Intern - Virtual Galaxy Infotech Ltd. - Oct 2025 to Present",
+      "Data Analyst - PreProd Corp - Nov 2023 to Jan 2025",
+      "Campus Ambassador - PW (PhysicsWallah) - Jan 2023 to Mar 2024"
+    ],
+    "projects": ["Food Demand Forecasting", "Calpred"],
+    "certifications": [
+      "Artificial Intelligence and Machine Learning Powered by Google Developers - SmartInternz"
+    ],
+    "notedSkillIssues": ["Docks", "dvc"],
+    "openToWork": "Recruiters only; Mumbai plus one additional location; on-site"
+  },
+  "drift": [
+    {
+      "priority": "P0",
+      "section": "headline",
+      "action": "Replace the student-era headline with desired.headline.",
+      "status": "pending"
+    },
+    {
+      "priority": "P0",
+      "section": "about",
+      "action": "Create the About section from desired.about.",
+      "status": "pending"
+    },
+    {
+      "priority": "P0",
+      "section": "experience",
+      "action": "End the VGIL internship in Jan 2026 and add the Security Analyst role from Feb 2026.",
+      "status": "pending"
+    },
+    {
+      "priority": "P1",
+      "section": "experience",
+      "action": "Add evidence-based descriptions to all three desired experience entries.",
+      "status": "pending"
+    },
+    {
+      "priority": "P1",
+      "section": "projects",
+      "action": "Add or feature the recent AI, healthcare, security and infrastructure projects listed in desired.featuredProjects.",
+      "status": "pending"
+    },
+    {
+      "priority": "P1",
+      "section": "skills",
+      "action": "Prioritize desired.prioritySkills; remove or correct Docks and rename dvc to DVC.",
+      "status": "pending"
+    },
+    {
+      "priority": "P2",
+      "section": "certifications",
+      "action": "Reconcile certification names and dates, then add the missing NPTEL and University of Michigan credentials.",
+      "status": "pending"
+    },
+    {
+      "priority": "P2",
+      "section": "openToWork",
+      "action": "Confirm target roles, workplace types and locations before changing Open to Work preferences.",
+      "status": "needs-user-decision"
+    }
+  ]
+}
