@@ -18,8 +18,20 @@ import Technologies from "@/components/Technologies";
 import ProfileImage from "@/components/ProfileImage";
 
 const blogDirectory = path.join(process.cwd(), "content");
-const VANSH_AGE = 22;
+const VANSH_BIRTH_DATE = new Date(Date.UTC(2003, 3, 7)); // 7 April 2003
 const LIMIT = 2; // max show 2
+
+// Rebuild daily so the age rolls over on the birthday without a redeploy.
+export const revalidate = 86400;
+
+function getAge(birthDate: Date, now = new Date()) {
+  const age = now.getUTCFullYear() - birthDate.getUTCFullYear();
+  const hadBirthday =
+    now.getUTCMonth() > birthDate.getUTCMonth() ||
+    (now.getUTCMonth() === birthDate.getUTCMonth() &&
+      now.getUTCDate() >= birthDate.getUTCDate());
+  return hadBirthday ? age : age - 1;
+}
 
 export default async function Home() {
   const posts = await getPosts(blogDirectory, LIMIT);
@@ -41,7 +53,7 @@ export default async function Home() {
           </h1>
 
           <p className="mt-2 whitespace-nowrap text-sm font-medium sm:text-base">
-            22yo ML Engineer from India 🇮🇳
+            {getAge(VANSH_BIRTH_DATE)}yo ML Engineer from India 🇮🇳
           </p>
 
           <p className="mt-4 max-w-sm text-balance text-sm sm:text-base">
